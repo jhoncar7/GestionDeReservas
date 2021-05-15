@@ -19,4 +19,19 @@ pueda reservar un lugar dentro de la oficina el dia en que pueda asistir.
 4. Cada Area tiene un maximo de puestos a ocupar.
 5. No se podra exceder la cantidad de reservas por area.
 6. No exceder la cantidad de reservas totales (el total se calcula con la suma de puestos de cada area)
-7. Ademas tendra la opcion de poder reservar una cochera si posee un vehiculo
+7. Ademas tendra la opcion de poder reservar una cochera si posee un vehiculo -> feature.
+
+Endpoints
+- Crear Empleado (post)
+- Consultar Empleado (get)
+- Eliminar Empleado (delete)
+- Modificar Empleado (put / patch)
+- Crear area (post)
+- Consultar disponibilidad del area (get)
+- Eliminar area (delete)
+- Modificar el maximo del area (put / patch)
+- Reservar lugar de empleado (post) -> validar tope de 3.
+- Eliminar lugar de empleado (delete)
+
+Dudas
+Como enviamos la pass y el id del empleado? Viene en el token de autenticacion o por el body ?
