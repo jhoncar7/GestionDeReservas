@@ -7,7 +7,7 @@ router.get('/abm-usuario', (req, res) => {
 })
 
 router.get('/abm-area', (req, res) => {
-    res.render('abmArea',{usuario : req.session.usclearuario})
+    res.render('abmArea',{usuario : req.session.usuario})
 })
 
 module.exports = router;
