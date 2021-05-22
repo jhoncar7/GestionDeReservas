@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Reserva tu lugar</title>
+  <link rel="stylesheet" href="../stylesheets/estilos.css">
+  <link rel="stylesheet" href="../stylesheets/mini-default.min.css">
+</head>
+
+<body>
+
+  <% if(usuario.perfil=='admin' ){ %>
+    <%- include ('./partials/encabezadoPrivado') %>
+      <% } else {%>
+        <%- include ('./partials/encabezadoUsuario') %>
+          <% } %>
+
+            <div class="container">
+              <h1>Te damos la Bienvenida para reservar tu lugar en la oficina</h1>
+              <hr>
+
+              <div class="row">
+
+
+              </div>
+
+            </div>
+
+            <%- include ('./partials/piePagina') %>
+              <script src="../javascripts/script.js"></script>
+</body>
+
+</html>
