@@ -1,5 +1,5 @@
 const connection = require('./connection');
-
+let ObjectId = require('mongodb').ObjectId;
 
 async function getUserInicioSesion(email) {
     const clientmongo = await connection.getConnection();
@@ -8,11 +8,30 @@ async function getUserInicioSesion(email) {
     return usuario;
 }
 
-async function getUser() {
+async function getUsers() {
     const clientmongo = await connection.getConnection();
-
     const usuarios = await clientmongo.db('ReservasPuesto').collection('users').find().toArray();
     return usuarios;
 }
 
-module.exports = { getUser, getUserInicioSesion };
+async function getUser(id){
+    const clientmongo = await connection.getConnection();
+    const usuario = await clientmongo.db('ReservasPuesto')
+        .collection('users')
+        .findOne({_id: new ObjectId(id)});
+    return usuario;
+}
+
+async function getPerfiles() {
+    const clientmongo = await connection.getConnection();
+    const perfiles = await clientmongo.db('ReservasPuesto').collection('perfiles').find().toArray();
+    return perfiles;
+}
+
+async function getAreas() {
+    const clientmongo = await connection.getConnection();
+    const areas = await clientmongo.db('ReservasPuesto').collection('areas').find().toArray();
+    return areas;
+}
+
+module.exports = { getUsers,getUser, getUserInicioSesion, getAreas, getPerfiles};

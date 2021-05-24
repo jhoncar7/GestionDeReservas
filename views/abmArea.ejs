@@ -12,44 +12,46 @@
 
 <body>
     <%- include ('./partials/back') %>
-
         <div class="container">
-            <h1>Registro</h1>
-            <p>Ingresa tus datos para ser un nuevo autor</p>
-
+            <h1>Usuarios</h1>
+            <hr>
             <div class="row">
                 <div class="col-sm-12">
-
-                            <form action="/procesar_registro" method="post" enctype="multipart/form-data">
-                                <fieldset>
-                                    <legend>Nuevo Autor</legend>
-                                    <p>
-                                        <label for="email">Email</label> <br>
-                                        <input type="email" name="email" id="email" required="true">
-                                    </p>
-                                    <p>
-                                        <label for="contrasena">Contraseña</label><br>
-                                        <input type="password" name="contrasena" id="contrasena" required="true">
-                                    </p>
-                                    <p>
-                                        <label for="pseudonimo">Pseudonimo</label><br>
-                                        <input type="text" name="pseudonimo" id="pseudonimo" required="true">
-                                    </p>
-                                    <p>
-                                        <Label>Avatar</Label> <br>
-                                        <input type="file" name="avatar" id="avatar">
-                                    </p>
-                                    <p>
-                                        <input class="primary" type="submit" value="Continuar">
-                                    </p>
-                                </fieldset>
-                            </form>
+                    <a class="button" href="/admin/crearArea">Agregar Area</a>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Area</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% area.forEach((a)=>{ %>
+                                <tr>
+                                    <td>
+                                        <%=a.area%>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/editar/<%=a._id%>"><span class="icon-edit"></span>
+                                            Editar
+                                        </a>
+                                        |
+                                        <a href="/admin/procesar_eliminar_area/<%=a._id%>"
+                                            onclick="return confirm('¿Está seguro de eliminar: <%=a.area%>?')"><span
+                                                class="icon-alert"></span>
+                                            Eliminar
+                                        </a>
+                                    </td>
+                                </tr>
+                                <%}) %>
+                        </tbody>
+                    </table>
+                    <hr>
                 </div>
             </div>
         </div>
-
         <%- include ('./partials/piePagina') %>
-            <script src="../javascripts/script.js"></script>
+        <script src="javascripts/script.js"></script>
 </body>
 
 </html>
