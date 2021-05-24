@@ -35,8 +35,6 @@ router.get('/editar/:id', async(req, res) => {
 
 router.post('/procesar_registro_Area', async(req, res) => {
     let name = req.body.area;
-    console.log('cuerpo', req.body);
-    console.log('name: ',name);
     if(!name){
         res.redirect('/admin/abm-area')
     }else{
@@ -47,8 +45,10 @@ router.post('/procesar_registro_Area', async(req, res) => {
 });
 
 router.post('/procesar_editar', async(req, res) => {
+    console.log(req.body);
     let usuario = req.body;
     const update = await dataMetodoPut.updateUser(usuario);
+    console.log(update);
     res.redirect('/admin/abm-usuario');
 });
 
