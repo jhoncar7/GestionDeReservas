@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Reserva tu lugar</title>
+  <link rel="stylesheet" href="../stylesheets/estilos.css">
+  <link rel="stylesheet" href="../stylesheets/mini-default.min.css">
+</head>
+
+<body>
+  <%- include ('./partials/back') %>
+
+    <div class="container">
+      <h1>Admin - Editar Usuario</h1>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+
+          <form action="/admin/procesar_editar" method="POST">
+            <input type="hidden" name="id" value="<%=usuario_id._id%>">
+            <fieldset>
+              <legend>Datos del usuario</legend>
+              <p>
+                <label for="email">Email</label>
+                <br>
+                <input type="email" required="true" value="<%=usuario_id.email%>" name="email">
+              </p>
+              <p>
+                <label for="perfil">Perfil</label>
+                <select class="form-select" id="perfil" aria-label="Default select example" name="perfil">
+                  <option value="<%=usuario_id.perfil%>" selected><%=usuario_id.perfil%></option>
+                  <% perfiles.forEach((perfil)=>{ %>
+                    <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
+                    <%}) %>
+                </select>
+              </p>
+              <p>
+                <label for="areas">Areas</label>
+                <select class="form-select" id="area" aria-label="Default select example" name="area">
+                  <option value="<%=usuario_id.area%>" selected><%=usuario_id.area%></option>
+                  <% areas.forEach((area)=>{ %>
+                    <option value="<%=area.area%>"><%=area.area%></option>
+                  <%}) %>
+                </select>
+              </p>
+              <p>
+                <input class="primary" type="submit" value="Continuar" />
+              </p>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <%- include ('./partials/piePagina') %>
+    <script src="/javascripts/script.js"></script>
+</body>
+
+</html>

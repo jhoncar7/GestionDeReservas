@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reserva tu lugar</title>
+    <link rel="stylesheet" href="../stylesheets/estilos.css">
+    <link rel="stylesheet" href="../stylesheets/mini-default.min.css">
+</head>
+
+<body>
+    <%- include ('./partials/encabezadoPrivado') %>
+
+        <div class="container">
+            <h1>Registro</h1>
+            <p>Ingresar Datos</p>
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                            <form action="/admin/procesar_registro" method="post" enctype="multipart/form-data">
+                                <fieldset>
+                                    <legend>Nuevo Usuario</legend>
+                                    <p>
+                                        <label for="email">Email</label> <br>
+                                        <input type="email" name="email" id="email" required="true">
+                                    </p>
+                                    <p>
+                                        <label for="contrasena">Contraseña</label><br>
+                                        <input type="password" name="contrasena" id="contrasena" required="true">
+                                    </p>
+                                    <p>
+                                        <label for="">Perfil</label>
+                                        
+                                        <select class="form-select" id="perfiles" aria-label="Default select example">
+                                            <option value="" selected>Seleccione</option>
+                                            <% perfiles.forEach((perfil)=>{ %>
+                                            <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
+                                            <%}) %>
+                                        </select>
+                                    </p>
+                                    <p>
+                                        <label for="">Area</label>
+                                        <select class="form-select" id="areas" aria-label="Default select example">
+                                            <option value="" selected>Seleccione</option>
+                                            <% areas.forEach((area)=>{ %>
+                                            <option value="<%=area.area%>"><%=area.area%></option>
+                                            <%}) %>
+                                        </select>
+                                    </p>
+                                    <p>
+                                        <input class="primary" type="submit" value="Continuar">
+                                    </p>
+                                </fieldset>
+                            </form>
+                </div>
+            </div>
+        </div>
+
+        <%- include ('./partials/piePagina') %>
+            <script src="../javascripts/script.js"></script>
+</body>
+
+</html>
