@@ -5,7 +5,6 @@ const dataMetodoGet = require('../data/metodoGet');
 async function updateUser(user) {
     const clientmongo = await connection.getConnection();
     const query = { _id: new ObjectId(user._id) };
-    console.log(query);
     const newvalues = {
         $set: {
             email: user.email,
@@ -13,7 +12,6 @@ async function updateUser(user) {
             area: user.area
         }
     };
-    console.log(newvalues);
     const result = await clientmongo.db('ReservasPuesto')
         .collection('users')
         .updateOne(query, newvalues);
