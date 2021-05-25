@@ -19,7 +19,7 @@ router.get('/abm-area', async(req, res) => {
 router.get('/registroUsuario', async(req, res) => {
     const areas = await dataMetodoGet.getAreas();
     const perfiles = await dataMetodoGet.getPerfiles();
-    res.render('registroAbmUsuario',{usuario : req.session.usuario, areas, perfiles})
+    res.render('registroAbmUsuario',{usuario : req.session.usuario, areas:areas, perfiles:perfiles})
 });
 
 router.get('/crearArea', (req, res) => {
@@ -30,7 +30,7 @@ router.get('/editar/:id', async(req, res) => {
     const user = await dataMetodoGet.getUser(req.params.id);
     const areas = await dataMetodoGet.getAreas();
     const perfiles = await dataMetodoGet.getPerfiles();
-    res.render('editar',{usuario : req.session.usuario, usuario_id: user, areas, perfiles})
+    res.render('editar',{usuario : req.session.usuario, usuario_id: user, areas:areas, perfiles:perfiles})
 });
 
 router.post('/procesar_registro_Area', async(req, res) => {
@@ -45,17 +45,34 @@ router.post('/procesar_registro_Area', async(req, res) => {
 });
 
 router.post('/procesar_editar', async(req, res) => {
-    console.log(req.body);
     let usuario = req.body;
-    const update = await dataMetodoPut.updateUser(usuario);
-    console.log(update);
+    let id = req.body._id;
+    const update = await dataMetodoPut.updateUser(usuario, id);
     res.redirect('/admin/abm-usuario');
+});
+
+router.get('/editarArea/:id', async(req, res) => {
+    const area = await dataMetodoGet.getArea(req.params.id);
+    res.render('editarArea',{usuario : req.session.usuario, area_id: area})
+});
+
+router.post('/procesar_editar_area', async(req, res) => {
+    let area = req.body;
+    let id = req.body._id;
+    const update = await dataMetodoPut.updateArea(area,id);
+    res.redirect('/admin/abm-area');
 });
 
 router.get('/procesar_eliminar/:id', async (req, res) => {
     let id = req.params.id;
     await dataMetodoDelete.deleteUser(id);
     res.redirect('/admin/abm-usuario');
+});
+
+router.get('/procesar_eliminar_area/:id', async (req, res) => {
+    let id = req.params.id;
+    await dataMetodoDelete.deleteArea(id);
+    res.redirect('/admin/abm-area');
 });
 
 module.exports = router;
