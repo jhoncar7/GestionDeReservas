@@ -21,3 +21,23 @@ pueda reservar un lugar dentro de la oficina el dia en que pueda asistir.
 5. No se podra exceder la cantidad de reservas por area.
 6. No exceder la cantidad de reservas totales (el total se calcula con la suma de puestos de cada area)
 7. Ademas tendra la opcion de poder reservar una cochera si posee un vehiculo
+
+
+# APIS
+
+1. /api/v1/users
+				GET -> obtener todos los usuarios
+
+
+2. /api/v1/user
+				GET : id -----> required   ---> hay un bug, cuando no existe el id rompe todo
+				PUT : id -----> required   ---> hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
+				DELETE : id --> required   ---> hay un bug, cuando no existe el id rompe todo
+
+3. /api/v1/areas
+				GET -> obtener todos las areas
+
+4. /api/v1/area
+				GET : id ----> required   --->  hay un bug, cuando no existe el id rompe todo
+				PUT : id ----> required   --->  hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
+				DELETE: id --> required   --->  hay un bug, cuando no existe el id rompe todo
