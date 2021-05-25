@@ -10,4 +10,13 @@ async function deleteUser(id){
     return result;
 }
 
-module.exports = { deleteUser };
+async function deleteArea(id){
+    const clientmongo = await connection.getConnection();
+    const result = await clientmongo.db('ReservasPuesto')
+        .collection('areas')
+        .deleteOne({_id: new ObjectId(id)});
+    
+    return result;
+}
+
+module.exports = { deleteUser, deleteArea };

@@ -22,16 +22,24 @@ async function getUser(id){
     return usuario;
 }
 
-async function getPerfiles() {
-    const clientmongo = await connection.getConnection();
-    const perfiles = await clientmongo.db('ReservasPuesto').collection('perfiles').find().toArray();
-    return perfiles;
-}
-
 async function getAreas() {
     const clientmongo = await connection.getConnection();
     const areas = await clientmongo.db('ReservasPuesto').collection('areas').find().toArray();
     return areas;
 }
 
-module.exports = { getUsers,getUser, getUserInicioSesion, getAreas, getPerfiles};
+async function getArea(id){
+    const clientmongo = await connection.getConnection();
+    const area = await clientmongo.db('ReservasPuesto')
+        .collection('areas')
+        .findOne({_id: new ObjectId(id)});
+    return area;
+}
+
+async function getPerfiles() {
+    const clientmongo = await connection.getConnection();
+    const perfiles = await clientmongo.db('ReservasPuesto').collection('perfiles').find().toArray();
+    return perfiles;
+}
+
+module.exports = { getUsers,getUser, getUserInicioSesion, getAreas, getPerfiles, getArea};
