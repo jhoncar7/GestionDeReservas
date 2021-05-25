@@ -16,9 +16,14 @@ async function getUsers() {
 
 async function getUser(id){
     const clientmongo = await connection.getConnection();
-    const usuario = await clientmongo.db('ReservasPuesto')
-        .collection('users')
-        .findOne({_id: new ObjectId(id)});
+    let usuario;
+    try {
+        usuario = await clientmongo.db('ReservasPuesto').collection('users').findOne({_id: new ObjectId(id)});
+    } catch (error) {
+        console.log(error);
+    }
+        console.log(usuario);
+
     return usuario;
 }
 

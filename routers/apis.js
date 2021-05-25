@@ -19,6 +19,9 @@ router.get('/api/v1/user', async (req, res) => {
     } else {
         if (idBody) {
             const user = await dataMetodoGet.getUser(idBody);
+            if(!user){
+                return res.json({'error':'usuario no encontrado'})
+            }
             res.json(user);
         }
         if (idQuery) {
@@ -33,8 +36,8 @@ router.post('/api/v1/user', async(req, res) => {
     let password = req.body.contrasena;
     let perfil = req.body.perfil;
     let area = req.body.area;
-    if(!email || !password || perfil=='' || area==''){
-        res.send('parametros requeridos en POST "email" "contrasena" "perfil" "area", los parametros deben enviarse por el body')
+    if(!email || !password || !perfil || !area){
+        res.json({'error' : 'parametros requeridos en POST "email" "contrasena" "perfil" "area", los parametros deben enviarse por el body'})
     }else{
         usuario = await dataMetodoPost.addUsuario(req.body);
         res.json(usuario.ops)
