@@ -3,6 +3,7 @@ const router = express.Router();
 const dataMetodoGet = require('../data/metodoGet');
 const dataMetodoPut = require('../data/metodoPut');
 const dataMetodoDelete = require('../data/MetodoDelete');
+const dataMetodoPost = require('../data/metodoPost');
 
 router.get('/api/v1/users', async (req, res) => {
     const user = await dataMetodoGet.getUsers();
@@ -26,6 +27,19 @@ router.get('/api/v1/user', async (req, res) => {
         }
     }
 })
+
+router.post('/api/v1/user', async(req, res) => {
+    let email = req.body.email;
+    let password = req.body.contrasena;
+    let perfil = req.body.perfil;
+    let area = req.body.area;
+    if(!email || !password || perfil=='' || area==''){
+        res.send('parametros requeridos en POST "email" "contrasena" "perfil" "area", los parametros deben enviarse por el body')
+    }else{
+        usuario = await dataMetodoPost.addUsuario(req.body);
+        res.json(usuario.ops)
+    }
+});
 
 router.put('/api/v1/user', async (req, res) => {
     let idBody = req.body._id;
@@ -93,7 +107,17 @@ router.get('/api/v1/area', async (req, res) => {
             res.json(area);
         }
     }
-})
+});
+
+router.post('/api/v1/area', async(req, res) => {
+    let area = req.body.area;
+    if(!area){
+        res.send('parametro requerido en POST "area", los parametros deben enviarse por el body')
+    }else{
+        area = await dataMetodoPost.addArea(req.body);
+        res.json(area.ops)
+    }
+});
 
 router.put('/api/v1/area', async (req, res) => { 
 

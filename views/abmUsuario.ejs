@@ -13,6 +13,10 @@
 <body>
     <%- include ('./partials/back') %>
         <div class="container">
+            <% if(error && error.length > 0) { %>
+                <h3><span class="icon-info"></span><%=error%></h3>
+            <%}%>
+
             <h1>Usuarios</h1>
             <hr>
             <div class="row">

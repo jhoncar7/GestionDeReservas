@@ -1,6 +1,14 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 
+async function addUsuario(usuario){
+    const clientmongo = await connection.getConnection();
+    const result = await clientmongo.db('ReservasPuesto')
+        .collection('users')
+        .insertOne(usuario);
+    return result;
+}
+
 async function addArea(area){
     const clientmongo = await connection.getConnection();
     const result = await clientmongo.db('ReservasPuesto')
@@ -9,4 +17,4 @@ async function addArea(area){
     return result;
 }
 
-module.exports = { addArea };
+module.exports = { addUsuario,addArea };

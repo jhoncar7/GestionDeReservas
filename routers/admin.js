@@ -8,7 +8,7 @@ const dataMetodoPost = require('../data/metodoPost');
 router.get('/abm-usuario', async (req, res) => {
     const user = await dataMetodoGet.getUsers();
     const usuario = req.session.usuario;
-    res.render('abmUsuario',{usuario : req.session.usuario, users : user})
+    res.render('abmUsuario',{usuario : req.session.usuario, users : user, error:req.flash('error')})
 });
 
 router.get('/abm-area', async(req, res) => {
@@ -20,6 +20,20 @@ router.get('/registroUsuario', async(req, res) => {
     const areas = await dataMetodoGet.getAreas();
     const perfiles = await dataMetodoGet.getPerfiles();
     res.render('registroAbmUsuario',{usuario : req.session.usuario, areas:areas, perfiles:perfiles})
+});
+
+router.post('/procesar_registro_usuario', async(req, res) => {
+    let email = req.body.email;
+    let password = req.body.contrasena;
+    let perfil = req.body.perfil;
+    let area = req.body.area;
+    if(!email || !password || perfil=='' || area==''){
+        req.flash('error', 'Error en los datos ingresados')
+        res.redirect('/admin/abm-usuario')
+    }else{
+        usuario = await dataMetodoPost.addUsuario(req.body);
+        res.redirect('/admin/abm-usuario')
+    }
 });
 
 router.get('/crearArea', (req, res) => {
