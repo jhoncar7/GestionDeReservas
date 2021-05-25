@@ -47,6 +47,7 @@ Como enviamos la pass y el id del empleado? Viene en el token de autenticacion o
 - GET : id -----> required   ---> hay un bug, cuando no existe el id rompe todo
 - PUT : id -----> required   ---> hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
 - DELETE : id --> required   ---> hay un bug, cuando no existe el id rompe todo
+- POST : email, contrasena, area, perfil ---> todos requeridos
 
 3. /api/v1/areas
 - GET -> obtener todos las areas
@@ -55,3 +56,4 @@ Como enviamos la pass y el id del empleado? Viene en el token de autenticacion o
 - GET : id ----> required   --->  hay un bug, cuando no existe el id rompe todo
 - PUT : id ----> required   --->  hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
 - DELETE: id --> required   --->  hay un bug, cuando no existe el id rompe todo
+- POST : area --> requerid ---> nombre del campo requerido es: area

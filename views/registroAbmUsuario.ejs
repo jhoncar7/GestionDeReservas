@@ -19,8 +19,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-
-                            <form action="/admin/procesar_registro" method="post" enctype="multipart/form-data">
+                            <form action="/admin/procesar_registro_usuario" method="post">
                                 <fieldset>
                                     <legend>Nuevo Usuario</legend>
                                     <p>
@@ -34,7 +33,7 @@
                                     <p>
                                         <label for="">Perfil</label>
                                         
-                                        <select class="form-select" id="perfiles" aria-label="Default select example">
+                                        <select class="form-select" name="perfil" aria-label="Default select example" required="true">
                                             <option value="" selected>Seleccione</option>
                                             <% perfiles.forEach((perfil)=>{ %>
                                             <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
@@ -43,7 +42,7 @@
                                     </p>
                                     <p>
                                         <label for="">Area</label>
-                                        <select class="form-select" id="areas" aria-label="Default select example">
+                                        <select class="form-select" name="area" aria-label="Default select example" >
                                             <option value="" selected>Seleccione</option>
                                             <% areas.forEach((area)=>{ %>
                                             <option value="<%=area.area%>"><%=area.area%></option>
