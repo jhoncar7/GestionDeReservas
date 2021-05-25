@@ -40,18 +40,18 @@ Como enviamos la pass y el id del empleado? Viene en el token de autenticacion o
 # APIS
 
 1. /api/v1/users
-				GET -> obtener todos los usuarios
+- GET -> obtener todos los usuarios
 
 
 2. /api/v1/user
-				GET : id -----> required   ---> hay un bug, cuando no existe el id rompe todo
-				PUT : id -----> required   ---> hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
-				DELETE : id --> required   ---> hay un bug, cuando no existe el id rompe todo
+- GET : id -----> required   ---> hay un bug, cuando no existe el id rompe todo
+- PUT : id -----> required   ---> hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
+- DELETE : id --> required   ---> hay un bug, cuando no existe el id rompe todo
 
 3. /api/v1/areas
-				GET -> obtener todos las areas
+- GET -> obtener todos las areas
 
 4. /api/v1/area
-				GET : id ----> required   --->  hay un bug, cuando no existe el id rompe todo
-				PUT : id ----> required   --->  hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
-				DELETE: id --> required   --->  hay un bug, cuando no existe el id rompe todo
+- GET : id ----> required   --->  hay un bug, cuando no existe el id rompe todo
+- PUT : id ----> required   --->  hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
+- DELETE: id --> required   --->  hay un bug, cuando no existe el id rompe todo
