@@ -3,7 +3,6 @@ let ObjectId = require('mongodb').ObjectId;
 
 async function getUserInicioSesion(email) {
     const clientmongo = await connection.getConnection();
-
     const usuario = await clientmongo.db('ReservasPuesto').collection('users').findOne({ email: email });
     return usuario;
 }
@@ -14,16 +13,14 @@ async function getUsers() {
     return usuarios;
 }
 
-async function getUser(id){
+async function getUser(id) {
     const clientmongo = await connection.getConnection();
-    let usuario;
+    let usuario = {};
     try {
-        usuario = await clientmongo.db('ReservasPuesto').collection('users').findOne({_id: new ObjectId(id)});
+        usuario = await clientmongo.db('ReservasPuesto').collection('users').findOne({ _id: new ObjectId(id) });
     } catch (error) {
-        console.log(error);
+        console.log('user not found');
     }
-        console.log(usuario);
-
     return usuario;
 }
 
@@ -33,11 +30,14 @@ async function getAreas() {
     return areas;
 }
 
-async function getArea(id){
+async function getArea(id) {
     const clientmongo = await connection.getConnection();
-    const area = await clientmongo.db('ReservasPuesto')
-        .collection('areas')
-        .findOne({_id: new ObjectId(id)});
+    let area = {};
+    try {
+        area = await clientmongo.db('ReservasPuesto').collection('areas').findOne({ _id: new ObjectId(id) });
+    } catch (error) {
+        console.log('area not found');
+    }
     return area;
 }
 
@@ -47,4 +47,4 @@ async function getPerfiles() {
     return perfiles;
 }
 
-module.exports = { getUsers,getUser, getUserInicioSesion, getAreas, getPerfiles, getArea};
+module.exports = { getUsers, getUser, getUserInicioSesion, getAreas, getPerfiles, getArea };

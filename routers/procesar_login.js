@@ -4,9 +4,7 @@ const data = require('../data/metodoGet');
 
 
 router.post('', async (req, res) => {
-
     const usuario = await data.getUserInicioSesion(req.body.email);
-
     if (usuario && req.body.password == usuario.password) {
         req.session.usuario = usuario;
         res.redirect('/index')
