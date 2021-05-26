@@ -6,7 +6,7 @@ router.get('', (req, res) => {
 })
 
 router.get('/reservar-lugar',(req,res)=>{
-  res.send('reserva - lugar')
+  res.send(`<h1>EN COnstruccion</h1>`)
 })
 
 module.exports = router;
