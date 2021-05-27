@@ -26,7 +26,7 @@ router.get('/api/v1/users/:id', async (req, res) => {
 router.post('/api/v1/users', async (req, res) => {
     let { email, password, perfil, area } = req.body;
     if (!email || !password || !perfil || !area) {
-        return res.status(404)
+        return res.status(400)
             .json({ "error": "parametros requeridos en POST 'email' 'contrasena' 'perfil' 'area', los parametros deben enviarse por el body" });
     } else {
         let usuario = await dataMetodoPost.addUsuario(req.body);
@@ -52,7 +52,7 @@ router.put('/api/v1/users/:id', async (req, res) => {
 router.delete('/api/v1/users/:id', async (req, res) => {
     let { id } = req.params;
     if (!id) {
-        return res.status(404).json({ "error": "el parametro _id es requerido" });
+        return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
     let user = await dataMetodoGet.getUser(id);
     if (!user) {
