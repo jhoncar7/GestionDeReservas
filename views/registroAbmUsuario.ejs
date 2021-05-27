@@ -33,7 +33,7 @@
                                     <p>
                                         <label for="perfil">Perfil</label>
                                         
-                                        <select class="form-select" name="perfil" aria-label="Default select example">
+                                        <select class="form-select" name="perfil" aria-label="Default select example" required="true">
                                             <option value="" selected>Seleccione</option>
                                             <% perfiles.forEach((perfil)=>{ %>
                                             <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
@@ -42,7 +42,7 @@
                                     </p>
                                     <p>
                                         <label for="area">Area</label>
-                                        <select class="form-select" name="area" aria-label="Default select example" >
+                                        <select class="form-select" name="area" aria-label="Default select example" required="true">
                                             <option value="" selected>Seleccione</option>
                                             <% areas.forEach((area)=>{ %>
                                             <option value="<%=area.area%>"><%=area.area%></option>
