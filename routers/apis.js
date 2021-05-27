@@ -6,88 +6,60 @@ const dataMetodoDelete = require('../data/MetodoDelete');
 const dataMetodoPost = require('../data/metodoPost');
 
 router.get('/api/v1/users', async (req, res) => {
-    const user = await dataMetodoGet.getUsers();
-    res.json(user);
-})
-
-router.get('/api/v1/user', async (req, res) => {
-    let idBody = req.body.id;
-    let idQuery = req.query.id;
-
-    if (!idBody && !idQuery) {
-        res.send('id requerido')
-    } else {
-        if (idBody) {
-            const user = await dataMetodoGet.getUser(idBody);
-            if(!user){
-                return res.json({'error':'usuario no encontrado'})
-            }
-            res.json(user);
-        }
-        if (idQuery) {
-            const user = await dataMetodoGet.getUser(idQuery);
-            res.json(user);
-        }
+    const users = await dataMetodoGet.getUsers();
+    if (users.length == 0) {
+        res.status(204);
     }
+    return res.json({ "count": users.length, users });
+
 })
 
-router.post('/api/v1/user', async(req, res) => {
-    let email = req.body.email;
-    let password = req.body.contrasena;
-    let perfil = req.body.perfil;
-    let area = req.body.area;
-    if(!email || !password || !perfil || !area){
-        res.json({'error' : 'parametros requeridos en POST "email" "contrasena" "perfil" "area", los parametros deben enviarse por el body'})
-    }else{
-        usuario = await dataMetodoPost.addUsuario(req.body);
-        res.json(usuario.ops)
+router.get('/api/v1/users/:id', async (req, res) => {
+    let { id } = req.params;
+    let user = await dataMetodoGet.getUser(id);
+    if (!user) {
+        return res.status(404).json({ "error": "usuario no encontrado" });
+    }
+    return res.json(user);
+})
+
+router.post('/api/v1/users', async (req, res) => {
+    let { email, password, perfil, area } = req.body;
+    if (!email || !password || !perfil || !area) {
+        return res.status(400)
+            .json({ "error": "parametros requeridos en POST 'email' 'contrasena' 'perfil' 'area', los parametros deben enviarse por el body" });
+    } else {
+        let usuario = await dataMetodoPost.addUsuario(req.body);
+        return res.status(201).json({ "success": true, "usuario": usuario.ops[0] });
     }
 });
 
-router.put('/api/v1/user', async (req, res) => {
-    let idBody = req.body._id;
-    let idQuery = req.query._id;
-
-    if (!idBody && !idQuery) {
-        res.send('id requerido, nombre del campo es "_id"')
-    } else {
-        if (idBody) {
-            let userBody = req.body;
-            userBody = await dataMetodoPut.updateUser(userBody, idBody);
-            if (!userBody) {
-                res.send('No se pudo procesar la solicitud, verificar los valores enviados')
-            } else {
-                res.json(userBody);
-            }
-        }
-
-        if (idQuery) {
-            let userQuery = req.query;
-            userQuery = await dataMetodoPut.updateUser(userQuery, idQuery);
-            if (!userQuery) {
-                res.send('No se pudo procesar la solicitud, verificar los valores enviados')
-            } else {
-                res.json(userQuery);
-            }
-        }
+router.put('/api/v1/users/:id', async (req, res) => {
+    let { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ "error": "el parametro _id es requerido" });
+    }
+    let updatedUser = await dataMetodoPut.updateUser(req.body, id);
+    console.log('updatedUser:', updatedUser);
+    if (!updatedUser) {
+        return res.status(404).json({ "error": "el usuario no existe" });
+    } else if (updatedUser.result.ok == 1) {
+        // TODO: devolver el usuario creado en forma de objeto
+        return res.json(updatedUser);
     }
 })
 
-router.delete('/api/v1/user', async (req, res) => {
-    let idQuery = req.query.id;
-    let idBody = req.body.id;
-    if (!idBody && !idQuery) {
-        res.send('ID requerido')
-    } else {
-        if (idQuery) {
-            await dataMetodoDelete.deleteUser(idQuery);
-            res.send('Usuario Eliminado')
-        }
-        if (idBody) {
-            await dataMetodoDelete.deleteUser(idBody);
-            res.send('Usuario Eliminado')
-        }
+router.delete('/api/v1/users/:id', async (req, res) => {
+    let { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
+    let user = await dataMetodoGet.getUser(id);
+    if (!user) {
+        return res.status(404).json({ "error": "usuario no encontrado" });
+    }
+    await dataMetodoDelete.deleteUser(id);
+    return res.json({ "success": true, "deletedUser": user });
 });
 
 router.get('/api/v1/areas', async (req, res) => {
@@ -112,17 +84,17 @@ router.get('/api/v1/area', async (req, res) => {
     }
 });
 
-router.post('/api/v1/area', async(req, res) => {
+router.post('/api/v1/area', async (req, res) => {
     let area = req.body.area;
-    if(!area){
+    if (!area) {
         res.send('parametro requerido en POST "area", los parametros deben enviarse por el body')
-    }else{
+    } else {
         area = await dataMetodoPost.addArea(req.body);
         res.json(area.ops)
     }
 });
 
-router.put('/api/v1/area', async (req, res) => { 
+router.put('/api/v1/area', async (req, res) => {
 
     let idBody = req.body._id;
     let idQuery = req.query._id;
@@ -156,7 +128,7 @@ router.delete('/api/v1/area', async (req, res) => {
 
     let idQuery = req.query.id;
     let idBody = req.body.id;
-    
+
     if (!idBody && !idQuery) {
         res.send('ID requerido')
     } else {

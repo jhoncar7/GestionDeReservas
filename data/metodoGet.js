@@ -15,7 +15,7 @@ async function getUsers() {
 
 async function getUser(id) {
     const clientmongo = await connection.getConnection();
-    let usuario = {};
+    let usuario = undefined;
     try {
         usuario = await clientmongo.db('ReservasPuesto').collection('users').findOne({ _id: new ObjectId(id) });
     } catch (error) {
@@ -32,7 +32,7 @@ async function getAreas() {
 
 async function getArea(id) {
     const clientmongo = await connection.getConnection();
-    let area = {};
+    let area = undefined;
     try {
         area = await clientmongo.db('ReservasPuesto').collection('areas').findOne({ _id: new ObjectId(id) });
     } catch (error) {

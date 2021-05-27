@@ -27,13 +27,13 @@
                                         <input type="email" name="email" id="email" required="true">
                                     </p>
                                     <p>
-                                        <label for="contrasena">Contraseña</label><br>
-                                        <input type="password" name="contrasena" id="contrasena" required="true">
+                                        <label for="password">Contraseña</label><br>
+                                        <input type="password" name="password" id="password" required="true">
                                     </p>
                                     <p>
-                                        <label for="">Perfil</label>
+                                        <label for="perfil">Perfil</label>
                                         
-                                        <select class="form-select" name="perfil" aria-label="Default select example" required="true">
+                                        <select class="form-select" name="perfil" aria-label="Default select example">
                                             <option value="" selected>Seleccione</option>
                                             <% perfiles.forEach((perfil)=>{ %>
                                             <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
@@ -41,7 +41,7 @@
                                         </select>
                                     </p>
                                     <p>
-                                        <label for="">Area</label>
+                                        <label for="area">Area</label>
                                         <select class="form-select" name="area" aria-label="Default select example" >
                                             <option value="" selected>Seleccione</option>
                                             <% areas.forEach((area)=>{ %>
