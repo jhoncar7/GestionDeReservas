@@ -3,15 +3,17 @@ let ObjectId = require('mongodb').ObjectId;
 const dataMetodoGet = require('../data/metodoGet');
 
 async function updateUser(user, id) {
-    const existe = await dataMetodoGet.getUser(id);
-    console.log('EXISTE: ', Object.keys(existe).length);
-    if (Object.keys(existe).length > 0) {
+    let usuario = await dataMetodoGet.getUser(id);
+    if (!usuario) {
+        return null;
+    }
+    if (Object.keys(usuario).length > 0) {
         const clientmongo = await connection.getConnection();
-        const query = { _id: new ObjectId(user._id) };
+        const query = { _id: new ObjectId(id) };
         let clave = Object.keys(user);
         let valor = Object.values(user);
         let objeto = {};
-        
+
         const newValues = { $set: {} };
 
         for (let j = 0; j < clave.length; j++) {
@@ -20,7 +22,6 @@ async function updateUser(user, id) {
             }
         }
         newValues.$set = objeto;
-
         if (Object.keys(objeto).length > 0) {
             const result = await clientmongo.db('ReservasPuesto')
                 .collection('users')
@@ -39,7 +40,7 @@ async function updateUser(user, id) {
     }
 }
 
-async function updateArea(area,id) {
+async function updateArea(area, id) {
     const e = await dataMetodoGet.getArea(id);
     console.log(e);
     console.log('EXISTE: ', Object.keys(e).length);
@@ -49,7 +50,7 @@ async function updateArea(area,id) {
         let clave = Object.keys(area);
         let valor = Object.values(area);
         let objeto = {};
-        
+
         const newValues = { $set: {} };
 
         for (let j = 0; j < clave.length; j++) {
