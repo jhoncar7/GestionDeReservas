@@ -30,11 +30,11 @@ pueda reservar un lugar dentro de la oficina el dia en que pueda asistir. Esto s
 - Users
 
 5. Instrucciones Tecnicas:
-5. 1.  Entorno de Desarrollo:
+ 1.  Entorno de Desarrollo:
 - Realizar en el CMD un "git clone https://github.com/jhoncar7/GestionDeReservas.git"
 - Una vez clonado ejecutar el comando "npm install" para instalar todas las dependencias
 
-5. 2. Ejecucion
+ 2. Ejecucion
 - ejecutar dentro de la carpeta del proyecto una vez ejecutado los pasos anteriores y escribir el siguiente comando "npm start" para sus respectiva ejecucion.
 
 # APIS
