@@ -5,12 +5,12 @@ const dataMetodoPut = require('../data/metodoPut');
 const dataMetodoDelete = require('../data/MetodoDelete');
 const dataMetodoPost = require('../data/metodoPost');
 
-router.get('/v1/areas', async (req, res) => {
+router.get('/api/v1/areas', async (req, res) => {
     const areas = await dataMetodoGet.getAreas();
     res.json(areas);
 })
 
-router.get('/v1/area', async (req, res) => {
+router.get('/api/v1/area', async (req, res) => {
     let idQuery = req.query.id;
     let idBody = req.body.id;
     if (!idQuery && !idBody) {
@@ -27,7 +27,7 @@ router.get('/v1/area', async (req, res) => {
     }
 });
 
-router.post('/v1/area', async (req, res) => {
+router.post('/api/v1/area', async (req, res) => {
     let area = req.body.area;
     if (!area) {
         res.send('parametro requerido en POST "area", los parametros deben enviarse por el body')
@@ -37,7 +37,7 @@ router.post('/v1/area', async (req, res) => {
     }
 });
 
-router.put('/v1/area', async (req, res) => {
+router.put('/api/v1/area', async (req, res) => {
 
     let idBody = req.body._id;
     let idQuery = req.query._id;
@@ -67,7 +67,7 @@ router.put('/v1/area', async (req, res) => {
     }
 })
 
-router.delete('/v1/area', async (req, res) => {
+router.delete('/api/v1/area', async (req, res) => {
 
     let idQuery = req.query.id;
     let idBody = req.body.id;
@@ -85,3 +85,5 @@ router.delete('/v1/area', async (req, res) => {
         }
     }
 })
+
+module.exports = router;

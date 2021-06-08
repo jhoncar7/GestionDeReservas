@@ -5,7 +5,7 @@ const dataMetodoPut = require('../data/metodoPut');
 const dataMetodoDelete = require('../data/MetodoDelete');
 const dataMetodoPost = require('../data/metodoPost');
 
-router.get('/v1/users', async (req, res) => {
+router.get('/api/v1/users', async (req, res) => {
     const users = await dataMetodoGet.getUsers();
     if (users.length == 0) {
         res.status(204);
@@ -14,7 +14,7 @@ router.get('/v1/users', async (req, res) => {
 
 })
 
-router.get('/v1/users/:id', async (req, res) => {
+router.get('/api/v1/users/:id', async (req, res) => {
     let { id } = req.params;
     let user = await dataMetodoGet.getUser(id);
     if (!user) {
@@ -23,7 +23,7 @@ router.get('/v1/users/:id', async (req, res) => {
     return res.json(user);
 })
 
-router.post('/v1/users', async (req, res) => {
+router.post('/api/v1/users', async (req, res) => {
     let { email, password, perfil, area } = req.body;
     if (!email || !password || !perfil || !area) {
         return res.status(400)
@@ -34,7 +34,7 @@ router.post('/v1/users', async (req, res) => {
     }
 });
 
-router.put('/v1/users/:id', async (req, res) => {
+router.put('/api/v1/users/:id', async (req, res) => {
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
@@ -49,7 +49,7 @@ router.put('/v1/users/:id', async (req, res) => {
     }
 })
 
-router.delete('/v1/users/:id', async (req, res) => {
+router.delete('/api/v1/users/:id', async (req, res) => {
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
@@ -61,3 +61,5 @@ router.delete('/v1/users/:id', async (req, res) => {
     await dataMetodoDelete.deleteUser(id);
     return res.json({ "success": true, "deletedUser": user });
 });
+
+module.exports = router;
