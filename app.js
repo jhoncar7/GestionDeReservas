@@ -13,7 +13,9 @@ const iniciarSesion = require('./routers/iniciar_sesion');
 const procesarLogin = require('./routers/procesar_login');
 const index = require('./routers/index');
 const cerrarSesion = require('./routers/cerrar_sesion')
-const apis = require('./routers/apis');
+const usuario = require('./routers/usuario');
+const area = require('./routers/area');
+const perfiles = require('./routers/perfiles');
 const adminRouter = require('./routers/admin')
 
 app.use(express.static('public'))
@@ -31,7 +33,9 @@ app.use('/index',index);
 app.use(admin);
 app.use('/admin',adminRouter)
 app.use('/cerrar-sesion',cerrarSesion);
-app.use(apis);
+app.use(usuario);
+app.use(area);
+app.use(perfiles);
 
 app.listen(path,()=>{
     console.log(chalk.green(`Servidor iniciado en el puerto ${path}`));
