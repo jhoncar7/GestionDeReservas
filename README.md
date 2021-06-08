@@ -34,9 +34,6 @@ Endpoints
 - Reservar lugar de empleado (post) -> validar tope de 3.
 - Eliminar lugar de empleado (delete)
 
-Dudas
-Como enviamos la pass y el id del empleado? Viene en el token de autenticacion o por el body ?
-
 # APIS
 
 1. /api/v1/users
