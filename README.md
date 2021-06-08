@@ -1,9 +1,9 @@
 # GestionDeReservas - Consignas Generales
+```python
 - Link https://reservatulugar.herokuapp.com/
 
 La Web Application 'Reserva tu Lugar' consiste basicamente en que un empleado de la compañia
 pueda reservar un lugar dentro de la oficina el dia en que pueda asistir. Esto se debe a que la cantidad del personal sobrepasa los limites requeridos tanto por protocolos COVID-19 o tambien por el espacio del lugar que tal vez no sea lo suficientemente amplio para concentrar cierta cantidad de personas durante cada dia.
-
 
 2. Funcionalidades (Endpoints)
 - Crear Empleado (post)
@@ -26,6 +26,7 @@ pueda reservar un lugar dentro de la oficina el dia en que pueda asistir. Esto s
 - Perfiles
 - Reservas
 - Users
+```
 
 ## Installation
 Usar cualquier editor de texto (Visula Study Code) y ejecutar los siguientes comandos:
