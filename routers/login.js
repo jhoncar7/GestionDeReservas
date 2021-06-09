@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('', (req, res) => {
-    if(req.session.usuario){
+    if(req.session.user){
         res.redirect('/index')
     }else{
-        res.render('inicio_sesion', { mensaje: req.flash('mensaje') })
+        res.render('login', { message: req.flash('message') })
     }
 });
 

@@ -1,29 +1,29 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
-const dataMetodoGet = require('../data/metodoGet');
+const getDataMethod = require('./getMethod');
 
 async function updateUser(user, id) {
-    let usuario = await dataMetodoGet.getUser(id);
-    if (!usuario) {
+    let userById = await getDataMethod.getUser(id);
+    if (!userById) {
         return null;
     }
-    if (Object.keys(usuario).length > 0) {
-        const clientmongo = await connection.getConnection();
+    if (Object.keys(userById).length > 0) {
+        const mongoClient = await connection.getConnection();
         const query = { _id: new ObjectId(id) };
-        let clave = Object.keys(user);
-        let valor = Object.values(user);
-        let objeto = {};
+        let key = Object.keys(user);
+        let value = Object.values(user);
+        let object = {};
 
         const newValues = { $set: {} };
 
-        for (let j = 0; j < clave.length; j++) {
-            if (clave[j] != '_id') {
-                objeto[clave[j]] = valor[j];
+        for (let j = 0; j < key.length; j++) {
+            if (key[j] != '_id') {
+                object[key[j]] = value[j];
             }
         }
-        newValues.$set = objeto;
-        if (Object.keys(objeto).length > 0) {
-            const result = await clientmongo.db('ReservasPuesto')
+        newValues.$set = object;
+        if (Object.keys(object).length > 0) {
+            const result = await mongoClient.db('ReservasPuesto')
                 .collection('users')
                 .updateOne(query, newValues);
 
@@ -41,27 +41,27 @@ async function updateUser(user, id) {
 }
 
 async function updateArea(area, id) {
-    const e = await dataMetodoGet.getArea(id);
+    const e = await getDataMethod.getArea(id);
     console.log(e);
     console.log('EXISTE: ', Object.keys(e).length);
     if (Object.keys(e).length > 0) {
-        const clientmongo = await connection.getConnection();
+        const mongoClient = await connection.getConnection();
         const query = { _id: new ObjectId(area._id) };
-        let clave = Object.keys(area);
-        let valor = Object.values(area);
-        let objeto = {};
+        let key = Object.keys(area);
+        let value = Object.values(area);
+        let object = {};
 
         const newValues = { $set: {} };
 
-        for (let j = 0; j < clave.length; j++) {
-            if (clave[j] != '_id') {
-                objeto[clave[j]] = valor[j];
+        for (let j = 0; j < key.length; j++) {
+            if (key[j] != '_id') {
+                object[key[j]] = value[j];
             }
         }
-        newValues.$set = objeto;
+        newValues.$set = object;
 
-        if (Object.keys(objeto).length > 0) {
-            const result = await clientmongo.db('ReservasPuesto')
+        if (Object.keys(object).length > 0) {
+            const result = await mongoClient.db('ReservasPuesto')
                 .collection('areas')
                 .updateOne(query, newValues);
 

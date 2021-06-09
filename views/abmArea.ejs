@@ -17,7 +17,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm-12">
-                    <a class="button" href="/admin/crearArea">Agregar Area</a>
+                    <a class="button" href="/admin/createArea">Agregar Area</a>
                     <table>
                         <thead>
                             <tr>
@@ -32,11 +32,11 @@
                                         <%=a.area%>
                                     </td>
                                     <td>
-                                        <a href="/admin/editarArea/<%=a._id%>"><span class="icon-edit"></span>
+                                        <a href="/admin/editArea/<%=a._id%>"><span class="icon-edit"></span>
                                             Editar
                                         </a>
                                         |
-                                        <a href="/admin/procesar_eliminar_area/<%=a._id%>"
+                                        <a href="/admin/delete_area_process/<%=a._id%>"
                                             onclick="return confirm('¿Está seguro de eliminar: <%=a.area%>?')"><span
                                                 class="icon-alert"></span>
                                             Eliminar

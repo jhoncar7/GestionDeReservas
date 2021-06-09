@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const dataMetodoGet = require('../data/metodoGet');
-const dataMetodoPut = require('../data/metodoPut');
-const dataMetodoDelete = require('../data/MetodoDelete');
-const dataMetodoPost = require('../data/metodoPost');
+const getDataMethod = require('../data/getMethod');
+const putDataMethod = require('../data/putMethod');
+const deleteDataMethod = require('../data/deleteMethod');
+const postDataMethod = require('../data/postMethod');
 
 router.get('/api/v1/users', async (req, res) => {
-    const users = await dataMetodoGet.getUsers();
+    const users = await getDataMethod.getUsers();
     if (users.length == 0) {
         res.status(204);
     }
@@ -16,7 +16,7 @@ router.get('/api/v1/users', async (req, res) => {
 
 router.get('/api/v1/users/:id', async (req, res) => {
     let { id } = req.params;
-    let user = await dataMetodoGet.getUser(id);
+    let user = await getDataMethod.getUser(id);
     if (!user) {
         return res.status(404).json({ "error": "usuario no encontrado" });
     }
@@ -24,13 +24,13 @@ router.get('/api/v1/users/:id', async (req, res) => {
 })
 
 router.post('/api/v1/users', async (req, res) => {
-    let { email, password, perfil, area } = req.body;
-    if (!email || !password || !perfil || !area) {
+    let { email, password, profile, area } = req.body;
+    if (!email || !password || !profile || !area) {
         return res.status(400)
             .json({ "error": "parametros requeridos en POST 'email' 'contrasena' 'perfil' 'area', los parametros deben enviarse por el body" });
     } else {
-        let usuario = await dataMetodoPost.addUsuario(req.body);
-        return res.status(201).json({ "success": true, "usuario": usuario.ops[0] });
+        let user = await postDataMethod.addUser(req.body);
+        return res.status(201).json({ "success": true, "usuario": user.ops[0] });
     }
 });
 
@@ -39,7 +39,7 @@ router.put('/api/v1/users/:id', async (req, res) => {
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
-    let updatedUser = await dataMetodoPut.updateUser(req.body, id);
+    let updatedUser = await putDataMethod.updateUser(req.body, id);
     console.log('updatedUser:', updatedUser);
     if (!updatedUser) {
         return res.status(404).json({ "error": "el usuario no existe" });
@@ -54,11 +54,11 @@ router.delete('/api/v1/users/:id', async (req, res) => {
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
-    let user = await dataMetodoGet.getUser(id);
+    let user = await getDataMethod.getUser(id);
     if (!user) {
         return res.status(404).json({ "error": "usuario no encontrado" });
     }
-    await dataMetodoDelete.deleteUser(id);
+    await deleteDataMethod.deleteUser(id);
     return res.json({ "success": true, "deletedUser": user });
 });
 

@@ -19,7 +19,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                            <form action="/admin/procesar_registro_usuario" method="post">
+                            <form action="/admin/user_register_process" method="post">
                                 <fieldset>
                                     <legend>Nuevo Usuario</legend>
                                     <p>
@@ -31,12 +31,12 @@
                                         <input type="password" name="password" id="password" required="true">
                                     </p>
                                     <p>
-                                        <label for="perfil">Perfil</label>
+                                        <label for="profile">Perfil</label>
                                         
-                                        <select class="form-select" name="perfil" aria-label="Default select example" required="true">
+                                        <select class="form-select" name="profile" aria-label="Default select example" required="true">
                                             <option value="" selected>Seleccione</option>
-                                            <% perfiles.forEach((perfil)=>{ %>
-                                            <option value="<%=perfil.perfil%>"><%=perfil.perfil%></option>
+                                            <% profiles.forEach((profile)=>{ %>
+                                            <option value="<%=profile.profile%>"><%=profile.profile%></option>
                                             <%}) %>
                                         </select>
                                     </p>
