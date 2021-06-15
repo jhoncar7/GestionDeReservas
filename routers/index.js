@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 router.get('', (req, res) => {
-  res.render('index', { usuario: req.session.usuario })
+  res.render('index', { user: req.session.user })
 })
 
-router.get('/reservar-lugar',(req,res)=>{
-  res.send(`<h1>EN COnstruccion</h1>`)
+router.get('/reserve-place',(req,res)=>{
+  res.send(`<h1>En Construccion</h1>`)
 })
 
 module.exports = router;
