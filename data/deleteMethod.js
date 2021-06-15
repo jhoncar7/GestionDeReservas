@@ -2,8 +2,8 @@ const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 
 async function deleteUser(id){
-    const clientmongo = await connection.getConnection();
-    const result = await clientmongo.db('ReservasPuesto')
+    const mongoClient = await connection.getConnection();
+    const result = await mongoClient.db('ReservasPuesto')
         .collection('users')
         .deleteOne({_id: new ObjectId(id)});
     
@@ -11,8 +11,8 @@ async function deleteUser(id){
 }
 
 async function deleteArea(id){
-    const clientmongo = await connection.getConnection();
-    const result = await clientmongo.db('ReservasPuesto')
+    const mongoClient = await connection.getConnection();
+    const result = await mongoClient.db('ReservasPuesto')
         .collection('areas')
         .deleteOne({_id: new ObjectId(id)});
     

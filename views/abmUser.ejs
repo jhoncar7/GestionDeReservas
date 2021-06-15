@@ -21,7 +21,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm-12">
-                    <a class="button" href="/admin/registroUsuario">Agregar Usuario</a>
+                    <a class="button" href="/admin/userRegister">Agregar Usuario</a>
                     <table>
                         <thead>
                             <tr>
@@ -32,24 +32,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% users.forEach((usuario)=>{ %>
+                            <% user.forEach((user)=>{ %>
                                 <tr>
                                     <td>
-                                        <%=usuario.email%>
+                                        <%=user.email%>
                                     </td>
                                     <td>
-                                        <%=usuario.perfil%>
+                                        <%=user.profile%>
                                     </td>
                                     <td>
-                                        <%=usuario.area%>
+                                        <%=user.area%>
                                     </td>
                                     <td>
-                                        <a href="/admin/editar/<%=usuario._id%>"><span class="icon-edit"></span>
+                                        <a href="/admin/edit/<%=user._id%>"><span class="icon-edit"></span>
                                             Editar
                                         </a>
                                         |
-                                        <a href="/admin/procesar_eliminar/<%=usuario._id%>"
-                                            onclick="return confirm('¿Está seguro de eliminar: <%=usuario.email%>?')"><span
+                                        <a href="/admin/delete_process/<%=user._id%>"
+                                            onclick="return confirm('¿Está seguro de eliminar: <%=user.email%>?')"><span
                                                 class="icon-alert"></span>
                                             Eliminar
                                         </a>
