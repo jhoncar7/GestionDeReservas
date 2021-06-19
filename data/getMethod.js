@@ -47,4 +47,21 @@ async function getProfiles() {
     return profiles;
 }
 
-module.exports = { getUsers, getUser, getUserLogin, getAreas, getProfiles, getArea };
+async function getReservation(id) {
+    const mongoClient = await connection.getConnection();
+    let reserva = undefined;
+    try {
+        reserva = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ _id: new ObjectId(id) });
+    } catch (error) {
+        console.log('area not found');
+    }
+    return reserva;
+}
+
+async function getReservationByDate(date) {
+    const mongoClient = await connection.getConnection();
+    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ date: date });
+    return reservas;
+}
+
+module.exports = { getUsers, getUser, getUserLogin, getAreas, getProfiles, getArea, getReservation, getReservationByDate };

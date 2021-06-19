@@ -2,6 +2,7 @@ const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 const getDataMethod = require('./getMethod');
 
+
 async function updateUser(user, id) {
     let userById = await getDataMethod.getUser(id);
     if (!userById) {
@@ -78,4 +79,24 @@ async function updateArea(area, id) {
     }
 }
 
-module.exports = { updateUser, updateArea };
+async function addUserToReservation(userId, id) {
+    const mongoClient = await connection.getConnection();
+    const reservation = await getDataMethod.getReservation(id);
+    if (!reservation) {
+        return null;
+    }
+    let newUsersId = reservation.usersId
+    newUsersId.push(userId);
+    const result = await mongoClient.db('ReservasPuesto')
+        .collection('reservas')
+        .updateOne(
+            { _id: id },
+            { $set: { "usersId": newUsersId } });
+
+    return result;
+}
+
+
+
+
+module.exports = { updateUser, updateArea, addUserToReservation };

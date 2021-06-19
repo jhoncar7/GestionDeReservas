@@ -12,14 +12,15 @@ const path = process.env.PORT || 8080;
 const login = require('./routers/login');
 const loginProcess = require('./routers/process_login');
 const index = require('./routers/index');
-const logout = require('./routers/logout')
+const logout = require('./routers/logout');
 const user = require('./routers/user');
 const area = require('./routers/area');
 const profile = require('./routers/profile');
-const adminRouter = require('./routers/admin')
+const adminRouter = require('./routers/admin');
+const reservation = require('./routers/reservation');
 
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.use(session({ secret: 'token-muy-secreto', resave: true, saveUninitialized: true }));
@@ -36,6 +37,7 @@ app.use('/logout',logout);
 app.use(user);
 app.use(area);
 app.use(profile);
+app.use(reservation);
 
 app.listen(path,()=>{
     console.log(chalk.green(`Servidor iniciado en el puerto ${path}`));

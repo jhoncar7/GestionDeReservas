@@ -2,7 +2,7 @@ const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 const bcrypt = require('bcryptjs');
 
-async function addUser(user){
+async function addUser(user) {
     const mongoClient = await connection.getConnection();
     user.password = bcrypt.hashSync(user.password, 8);
     const result = await mongoClient.db('ReservasPuesto')
@@ -11,7 +11,7 @@ async function addUser(user){
     return result;
 }
 
-async function addArea(area){
+async function addArea(area) {
     const mongoClient = await connection.getConnection();
     const result = await mongoClient.db('ReservasPuesto')
         .collection('areas')
@@ -19,4 +19,14 @@ async function addArea(area){
     return result;
 }
 
-module.exports = { addUser,addArea };
+async function addReservation(date) {
+    let reserva = { date: date, usersId: [] }
+    const mongoClient = await connection.getConnection();
+    const result = await mongoClient.db('ReservasPuesto')
+        .collection('reservas')
+        .insertOne(reserva);
+    return result;
+}
+
+
+module.exports = { addUser, addArea, addReservation };
