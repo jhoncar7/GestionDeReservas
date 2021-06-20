@@ -1,9 +1,22 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-async function getUserLogin(email) {
+async function getUserLogin(email, password) {
     const mongoClient = await connection.getConnection();
     const user = await mongoClient.db('ReservasPuesto').collection('users').findOne({ email: email });
+    
+    if(!user){
+        throw new Error('Usuario no existe')
+    }
+
+    const isValido = bcrypt.compareSync(password,user.password);
+
+    if(!isValido){
+        throw new Error('Password invalida')
+    }
+
     return user;
 }
 
