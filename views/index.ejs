@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Reserva tu lugar</title>
-  <link rel="stylesheet" href="../stylesheets/estilos.css">
-  <link rel="stylesheet" href="../stylesheets/mini-default.min.css">
+    <title>Inicio de Sesion</title>
+
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <!-- Nuestro css-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" th:href="@{/css/styles.css}">
+
 </head>
 
 <body>
-
-  <% if(user.profile=='admin' ){ %>
-    <%- include ('./partials/encabezadoPrivado') %>
-      <% } else {%>
-        <%- include ('./partials/encabezadoUsuario') %>
-          <% } %>
-
-            <div class="container">
-              <h1>Te damos la Bienvenida para reservar tu lugar en la oficina</h1>
-              <hr>
-
-              <div class="row">
-
-
-              </div>
-
-            </div>
-
-            <%- include ('./partials/piePagina') %>
-              <script src="../javascripts/script.js"></script>
+    <div class="modal-dialog text-center">
+        <h1 style="color: aliceblue;">API REST RESERVA TU LUGAR</h1>
+    </div>
 </body>
 
 </html>

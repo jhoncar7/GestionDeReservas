@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/admin', (req, res, next) => {
-  console.log('peticion admin');
     if (!req.session.user) {
       req.flash('message', '❌Inicie Sesion❌')
       res.redirect("/")

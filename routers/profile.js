@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const getDataMethod = require('../data/getMethod');
+const profile = require('../data/profile');
 
 router.get('/api/v1/profiles', async (req, res) => {
-    const profiles = await getDataMethod.getProfiles();
+    const profiles = await profile.getProfiles();
     res.json(profiles);
 })
 
