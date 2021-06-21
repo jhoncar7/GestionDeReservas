@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../data/user');
-
-const profile = require('../data/profile');
+const profiles = require('../data/profile');
 const reservation = require('../data/reservation');
 
+// funcionando
 router.get('/api/v1/users', async (req, res) => {
     const users = await user.getUsers();
     if (users.length == 0) {
@@ -13,6 +13,7 @@ router.get('/api/v1/users', async (req, res) => {
     return res.json({ "count": users.length, users });
 })
 
+//funcionando
 router.get('/api/v1/user/:id', async (req, res) => {
     let { id } = req.params;
     let searchUser = await user.getUser(id);
@@ -22,17 +23,21 @@ router.get('/api/v1/user/:id', async (req, res) => {
     return res.json(searchUser);
 })
 
+// funcionando
 router.post('/api/v1/user', async (req, res) => {
+    //el perfil estaria bueno machearlo con la tabla y validar que sea cualqueir valor ingresado
     let { email, password, profile, area } = req.body;
-    if (!email || !password || !profile || !area) {
+
+    if (!email || !password || profile > profiles_id.length || profile <= 0 || !area) {
         return res.status(400)
-            .json({ "error": "parametros requeridos en POST 'email' 'contrasena' 'perfil' 'area', los parametros deben enviarse por el body" });
+            .json({ "error": "parametros requeridos en POST 'email' 'password' 'profile' 'area', los parametros deben enviarse por el body" });
     } else {
         let newUser = await user.addUser(req.body);
         return res.status(201).json({ "success": true, "usuario": newUser.ops[0] });
     }
 });
 
+//funcionando
 router.put('/api/v1/user/:id', async (req, res) => {
     let { id } = req.params;
     if (!id) {
@@ -44,11 +49,14 @@ router.put('/api/v1/user/:id', async (req, res) => {
         return res.status(404).json({ "error": "el usuario no existe" });
     } else if (updatedUser.result.ok == 1) {
         // TODO: devolver el usuario creado en forma de objeto
-        return res.json(updatedUser);
+        //return res.json(updatedUser);
+        return res.json({"status" : "ok", "message" : "actualizacion exitosa"})
     }
 })
 
-router.delete('/api/v1/users/:id', async (req, res) => {
+//Funcinando
+router.delete('/api/v1/user/:id', async (req, res) => {
+    console.log('parametros : ', req.params);
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
