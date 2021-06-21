@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const user = require('../data/user');
 
-// funcionando
+//verificado ✔
 router.get('/api/v1/users', async (req, res) => {
     const users = await user.getUsers();
     if (users.length == 0) {
@@ -11,7 +11,7 @@ router.get('/api/v1/users', async (req, res) => {
     return res.json({ "count": users.length, users });
 })
 
-//funcionando
+//verificado ✔
 router.get('/api/v1/user/:id', async (req, res) => {
     let { id } = req.params;
     let searchUser = await user.getUser(id);
@@ -21,7 +21,7 @@ router.get('/api/v1/user/:id', async (req, res) => {
     return res.json(searchUser);
 })
 
-// funcionando
+//verificado ✔
 router.post('/api/v1/user', async (req, res) => {
     //el perfil estaria bueno machearlo con la collection de perfil y validar que haya ingresado un valor valido
     let { email, password, profile, area } = req.body;
@@ -35,7 +35,7 @@ router.post('/api/v1/user', async (req, res) => {
     }
 });
 
-//funcionando
+//verificado ✔
 router.put('/api/v1/user/:id', async (req, res) => {
     let { id } = req.params;
     if (!id) {
@@ -52,7 +52,7 @@ router.put('/api/v1/user/:id', async (req, res) => {
     }
 })
 
-//Funcinando
+//verificado ✔
 router.delete('/api/v1/user/:id', async (req, res) => {
     
     let { id } = req.params;
