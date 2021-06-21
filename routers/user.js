@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../data/user');
-const profiles = require('../data/profile');
-const reservation = require('../data/reservation');
 
 // funcionando
 router.get('/api/v1/users', async (req, res) => {
@@ -25,10 +23,10 @@ router.get('/api/v1/user/:id', async (req, res) => {
 
 // funcionando
 router.post('/api/v1/user', async (req, res) => {
-    //el perfil estaria bueno machearlo con la tabla y validar que sea cualqueir valor ingresado
+    //el perfil estaria bueno machearlo con la collection de perfil y validar que haya ingresado un valor valido
     let { email, password, profile, area } = req.body;
 
-    if (!email || !password || profile > profiles_id.length || profile <= 0 || !area) {
+    if (!email || !password || !profile || !area) {
         return res.status(400)
             .json({ "error": "parametros requeridos en POST 'email' 'password' 'profile' 'area', los parametros deben enviarse por el body" });
     } else {
@@ -56,7 +54,7 @@ router.put('/api/v1/user/:id', async (req, res) => {
 
 //Funcinando
 router.delete('/api/v1/user/:id', async (req, res) => {
-    console.log('parametros : ', req.params);
+    
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });

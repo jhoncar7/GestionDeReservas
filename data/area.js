@@ -36,12 +36,15 @@ async function addArea(area) {
 }
 
 async function updateArea(area, id) {
-    const e = await getDataMethod.getArea(id);
-    console.log(e);
-    console.log('EXISTE: ', Object.keys(e).length);
-    if (Object.keys(e).length > 0) {
+
+    const areaById = await getArea(id);
+
+    if (!areaById) {
+        return null;
+    }
+    if (Object.keys(areaById).length > 0) {
         const mongoClient = await connection.getConnection();
-        const query = { _id: new ObjectId(area._id) };
+        const query = { _id: new ObjectId(id) };
         let key = Object.keys(area);
         let value = Object.values(area);
         let object = {};
@@ -54,7 +57,6 @@ async function updateArea(area, id) {
             }
         }
         newValues.$set = object;
-
         if (Object.keys(object).length > 0) {
             const result = await mongoClient.db('ReservasPuesto')
                 .collection('areas')
