@@ -2,85 +2,67 @@ const express = require('express');
 const router = express.Router();
 const area = require('../data/area');
 
+//verificado ✔
 router.get('/api/v1/areas', async (req, res) => {
     const areas = await area.getAreas();
     res.json(areas);
 })
 
-router.get('/api/v1/area', async (req, res) => {
-    let idQuery = req.query.id;
-    let idBody = req.body.id;
-    if (!idQuery && !idBody) {
-        res.send('id requerido')
-    } else {
-        if (idQuery) {
-            const searchArea = await area.getArea(idQuery);
-            res.json(searchArea);
-        }
-        if (idBody) {
-            const searchArea = await area.getArea(idBody);
-            res.json(searchArea);
-        }
+//verificado ✔
+router.get('/api/v1/area/:id', async (req, res) => {
+
+    let { id } = req.params;
+
+    let searchArea = await area.getArea(id);
+    if (!searchArea) {
+        return res.status(404).json({ "error": "Area no encontrada" });
     }
+    return res.json(searchArea);
 });
 
+//verificado ✔
 router.post('/api/v1/area', async (req, res) => {
-    let newArea = req.body.area;
-    if (!newArea) {
-        res.send('parametro requerido en POST "area", los parametros deben enviarse por el body')
+    
+    let { name, seat_availability } = req.body;
+
+    if (!name || !seat_availability) {
+        return res.status(400)
+            .json({ "error": "parametros requeridos en POST son: 1.'name' 2.'seat_availability'(valor entero), los parametros deben enviarse por el body" });
     } else {
-        newArea = await area.addArea(req.body);
-        res.json(newArea.ops)
+        let newArea = await area.addArea(req.body);
+        return res.status(201).json({ "success": true, "usuario": newArea.ops[0] });
     }
 });
 
-router.put('/api/v1/area', async (req, res) => {
+//verificado ✔
+router.put('/api/v1/area/:id', async (req, res) => {
 
-    let idBody = req.body._id;
-    let idQuery = req.query._id;
-
-    if (!idBody && !idQuery) {
-        res.send('id requerido, nombre del campo es "_id"')
-    } else {
-        if (idBody) {
-            let userBody = req.body;
-            userBody = await area.updateArea(userBody, idBody);
-            if (!userBody) {
-                res.send('No se pudo procesar la solicitud, verificar los valores enviados')
-            } else {
-                res.json(userBody);
-            }
-        }
-
-        if (idQuery) {
-            let userQuery = req.query;
-            userQuery = await area.updateArea(userQuery, idQuery);
-            if (!userQuery) {
-                res.send('No se pudo procesar la solicitud, verificar los valores enviados')
-            } else {
-                res.json(userQuery);
-            }
-        }
+    let { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ "error": "el parametro _id es requerido" });
+    }
+    let updatedArea = await area.updateArea(req.body, id);
+    
+    if (!updatedArea) {
+        return res.status(404).json({ "error": "el area no existe" });
+    } else if (updatedArea.result.ok == 1) {
+        return res.json({"status" : "ok", "message" : "actualizacion exitosa"})
     }
 })
 
-router.delete('/api/v1/area', async (req, res) => {
+//verificado ✔
+router.delete('/api/v1/area/:id', async (req, res) => {
 
-    let idQuery = req.query.id;
-    let idBody = req.body.id;
-
-    if (!idBody && !idQuery) {
-        res.send('ID requerido')
-    } else {
-        if (idQuery) {
-            await area.deleteArea(idQuery);
-            res.send('Usuario Eliminado')
-        }
-        if (idBody) {
-            await area.deleteArea(idBody);
-            res.send('Usuario Eliminado')
-        }
+    let { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
+    let deleteArea = await area.getArea(id);
+    if (!deleteArea) {
+        return res.status(404).json({ "error": "Area no encontrado" });
+    }
+    await area.deleteArea(id);
+    return res.json({ "success": true, "deletedUser": deleteArea });
 })
 
 module.exports = router;
