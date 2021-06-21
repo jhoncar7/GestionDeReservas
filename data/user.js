@@ -56,7 +56,7 @@ async function addUser(user) {
 }
 
 async function updateUser(user, id) {
-    let userById = await getDataMethod.getUser(id);
+    let userById = await getUser(id);
     if (!userById) {
         return null;
     }
