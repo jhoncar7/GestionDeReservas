@@ -6,14 +6,14 @@ const jwt = require('jsonwebtoken');
 async function getUserLogin(email, password) {
     const mongoClient = await connection.getConnection();
     const user = await mongoClient.db('ReservasPuesto').collection('users').findOne({ email: email });
-    
-    if(!user){
+
+    if (!user) {
         throw new Error('Usuario no existe')
     }
 
-    const isValido = bcrypt.compareSync(password,user.password);
+    const isValido = bcrypt.compareSync(password, user.password);
 
-    if(!isValido){
+    if (!isValido) {
         throw new Error('Password invalida')
     }
 
@@ -37,16 +37,17 @@ async function getUser(id) {
     return user;
 }
 
-async function deleteUser(id){
+async function deleteUser(id) {
     const mongoClient = await connection.getConnection();
     const result = await mongoClient.db('ReservasPuesto')
         .collection('users')
-        .deleteOne({_id: new ObjectId(id)});
-    
+        .deleteOne({ _id: new ObjectId(id) });
+
     return result;
 }
 
 async function addUser(user) {
+    user.reservas = [];
     const mongoClient = await connection.getConnection();
     user.password = bcrypt.hashSync(user.password, 8);
     const result = await mongoClient.db('ReservasPuesto')
@@ -110,4 +111,21 @@ async function addUserToReservation(userId, id) {
     return result;
 }
 
-module.exports = {getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, addUserToReservation}
+async function updateUserReserva(array,id) {
+    console.log('arrayyyy', array);
+    console.log('id: ', id);
+    const mongoClient = await connection.getConnection();
+    const query = { _id: new ObjectId(id) };
+    const newValues = {
+        $set: {
+            reservas: array
+        }
+    }
+
+    const result = await mongoClient.db('ReservasPuesto').collection('users')
+                    .updateOne(query,newValues);
+    
+    return result;
+}
+
+module.exports = { getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, addUserToReservation, updateUserReserva }
