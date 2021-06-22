@@ -4,7 +4,7 @@ const index = require('./routers/index')
 const user = require('./routers/user')
 const area = require('./routers/area')
 const profile = require('./routers/profile')
-const reservation = require('./routers/reservation')
+const reservation = require('./routers/reservasUser')
 
 const app = express();
 const path = process.env.PORT || 8080;

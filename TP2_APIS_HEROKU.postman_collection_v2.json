@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "37640669-7863-449d-ad17-ab333eed7248",
+		"name": "TP2_APIS_LOCALHOST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "refactorizacion@email.comm",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "api",
+							"type": "text"
+						},
+						{
+							"key": "area",
+							"value": "IT",
+							"type": "text"
+						},
+						{
+							"key": "profile",
+							"value": "anonimo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user(id)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user/60a54e0791fcc5a23670360b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"60a54e0791fcc5a23670360b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user(id)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "usuario@email.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "perfil",
+							"value": "adminn",
+							"type": "text"
+						},
+						{
+							"key": "area",
+							"value": "ITT",
+							"description": "_",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user/60a54e0791fcc5a23670360b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"60a54e0791fcc5a23670360b"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "60ac321774ee2c01b1ad2a9e",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "jhon@mail.com",
+							"disabled": true
+						},
+						{
+							"key": "area",
+							"value": "IT",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user(id)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user/60d109a005047e4aa8f5f4a4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"60d109a005047e4aa8f5f4a4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "area",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "GERENCIA",
+							"type": "text"
+						},
+						{
+							"key": "seat_availability",
+							"value": "50",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/area",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"area"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "areas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/areas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"areas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "area(id)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/area/60ae618ab62e480022511fa3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"area",
+						"60ae618ab62e480022511fa3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "area(id)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "GEREN",
+							"type": "text"
+						},
+						{
+							"key": "seat_availability",
+							"value": "40",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/area/60d1132484d7b54988c9bf65",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"area",
+						"60d1132484d7b54988c9bf65"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "area(id)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/area/60c02f02c906f434a874d306",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"area",
+						"60c02f02c906f434a874d306"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "perfiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/profiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reserva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "date",
+							"value": "2021/6/23",
+							"type": "text"
+						},
+						{
+							"key": "userId",
+							"value": "60a85d0afd4374832020ace4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/reservation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"reservation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
