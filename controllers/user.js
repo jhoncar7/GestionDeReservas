@@ -116,4 +116,4 @@ async function updateUserReserva(array,id) {
 }
 
 
-module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, addUserToReservation, updateUserReserva }
+module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, updateUserReserva }
