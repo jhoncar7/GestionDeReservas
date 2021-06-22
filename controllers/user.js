@@ -16,8 +16,12 @@ async function getUserLogin(email, password) {
     if (!isValido) {
         throw new Error('Password invalida')
     }
-
     return user;
+}
+
+async function generateJWT(user) {
+    const token = jwt.sign({ _id: user._id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
+    return token;
 }
 
 async function getUsers() {
@@ -111,4 +115,5 @@ async function updateUserReserva(array,id) {
     return result;
 }
 
-module.exports = { getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, updateUserReserva }
+
+module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, addUserToReservation, updateUserReserva }

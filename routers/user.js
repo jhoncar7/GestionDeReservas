@@ -1,7 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../controllers/user');
+const auth = require('../middleware/auth')
 
+router.post('/api/v1/login', async (req, res) => {
+
+    let {email, password} = req.body;
+    console.log('email y password : ' , email, password);
+    if (!email || !password) {
+        return res.status(401).send('Datos invalidos')
+    } else {
+        try {
+            const userLogin = await user.getUserLogin(email, password);
+            const token = await user.generateJWT(userLogin);
+            res.send({ userLogin, token })
+        } catch (error) {
+            return res.status(401).send(error.message)
+        }
+    }
+})
 //verificado ✔
 router.get('/api/v1/users', async (req, res) => {
     const users = await user.getUsers();
@@ -22,7 +39,7 @@ router.get('/api/v1/user/:id', async (req, res) => {
 })
 
 //verificado ✔
-router.post('/api/v1/user', async (req, res) => {
+router.post('/api/v1/user', auth, async (req, res) => {
     //el perfil estaria bueno machearlo con la collection de perfil y validar que haya ingresado un valor valido
     let { email, password, profile, area } = req.body;
 
@@ -36,7 +53,7 @@ router.post('/api/v1/user', async (req, res) => {
 });
 
 //verificado ✔
-router.put('/api/v1/user/:id', async (req, res) => {
+router.put('/api/v1/user/:id', auth, async (req, res) => {
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
@@ -48,13 +65,13 @@ router.put('/api/v1/user/:id', async (req, res) => {
     } else if (updatedUser.result.ok == 1) {
         // TODO: devolver el usuario creado en forma de objeto
         //return res.json(updatedUser);
-        return res.json({"status" : "ok", "message" : "actualizacion exitosa"})
+        return res.json({ "status": "ok", "message": "actualizacion exitosa" })
     }
 })
 
 //verificado ✔
-router.delete('/api/v1/user/:id', async (req, res) => {
-    
+router.delete('/api/v1/user/:id', auth, async (req, res) => {
+
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
