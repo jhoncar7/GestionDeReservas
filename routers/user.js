@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../data/user');
+const user = require('../controllers/user');
 
 //verificado ✔
 router.get('/api/v1/users', async (req, res) => {

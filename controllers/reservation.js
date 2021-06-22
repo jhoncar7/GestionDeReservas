@@ -54,13 +54,13 @@ async function validarFechaYReserva(user, date) {
                         i++;
                     }
                 }
-                if(valido){
+                if (valido) {
                     user.reservas.push(date)
                 }
-            }else{
+            } else {
                 valido = false;
             }
-        }else{
+        } else {
             valido = false;
         }
     }

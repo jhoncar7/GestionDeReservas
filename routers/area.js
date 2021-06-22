@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const area = require('../data/area');
+const area = require('../controllers/area');
 
 //verificado ✔
 router.get('/api/v1/areas', async (req, res) => {
@@ -22,7 +22,7 @@ router.get('/api/v1/area/:id', async (req, res) => {
 
 //verificado ✔
 router.post('/api/v1/area', async (req, res) => {
-    
+
     let { name, seat_availability } = req.body;
 
     if (!name || !seat_availability) {
@@ -42,11 +42,11 @@ router.put('/api/v1/area/:id', async (req, res) => {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
     let updatedArea = await area.updateArea(req.body, id);
-    
+
     if (!updatedArea) {
         return res.status(404).json({ "error": "el area no existe" });
     } else if (updatedArea.result.ok == 1) {
-        return res.json({"status" : "ok", "message" : "actualizacion exitosa"})
+        return res.json({ "status": "ok", "message": "actualizacion exitosa" })
     }
 })
 
@@ -62,7 +62,7 @@ router.delete('/api/v1/area/:id', async (req, res) => {
         return res.status(404).json({ "error": "Area no encontrado" });
     }
     await area.deleteArea(id);
-    return res.json({ "success": true, "deletedUser": deleteArea });
+    return res.json({ "success": true, "deletedArea": deleteArea });
 })
 
 module.exports = router;

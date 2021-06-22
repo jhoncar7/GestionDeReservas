@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const profile = require('../data/profile');
+const profile = require('../controllers/profile');
 
 //verificado ✔
 router.get('/api/v1/profiles', async (req, res) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../data/user')
-const reservation = require('../data/reservation');
+const user = require('../controllers/user')
+const reservation = require('../controllers/reservation');
 
 router.get('/api/v1/reservation', async (req, res) => {
     const users = await user.getUsers();
