@@ -38,12 +38,13 @@ router.post('/api/v1/reservation', async (req, res) => {
         let reservaId = "";
         if (!reserva) {
             reserva = await reservation.addReservation(date)
-            console.log("new reserva", reserva)
             reservaId = reserva.ops[0]._id;
+            console.log("new reservaId",reservaId);
         } else {
             reservaId = reserva._id;
+            console.log("old reservaId",reservaId);
         }
-        user.addUserToReservation(userId, reservaId);
+        reservation.addUserToReservation(userId, reservaId);
 
         return res.status(201).json({ "success": true, "usuario": searchUser });
     }
