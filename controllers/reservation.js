@@ -1,5 +1,6 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
+const weather = require('../integration/weather');
 
 async function getReservation(id) {
     const mongoClient = await connection.getConnection();
@@ -84,5 +85,13 @@ async function validarFechaYReserva(user, date) {
     }
     return valido;
 }
+
+// async function getWeather() {
+//     weather.getWeather
+
+// }
+
+
+
 
 module.exports = { getReservation, getReservationByDate, addReservation, addUserToReservation, validarFechaYReserva }

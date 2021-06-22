@@ -6,6 +6,7 @@ const user = require('./routers/user');
 const area = require('./routers/area');
 const profile = require('./routers/profile');
 const reservation = require('./routers/reservation');
+const weather = require('./integration/weather');
 
 const app = express();
 const path = process.env.PORT || 8080;
@@ -20,6 +21,7 @@ app.use(user);
 app.use(area);
 app.use(profile);
 app.use(reservation);
+app.use(weather);
 
 app.listen(path, () => {
     console.log(`Servidor iniciado en el puerto ${path}`);
