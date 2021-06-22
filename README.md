@@ -47,23 +47,34 @@ npm start
 ## APIS
 ```python
 1. /api/v1/users
-- GET -> obtener todos los usuarios
-
+- GET -> get all users
 
 2. /api/v1/user
-- GET : id -----> required   ---> hay un bug, cuando no existe el id rompe todo
-- PUT : id -----> required   ---> hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
-- DELETE : id --> required   ---> hay un bug, cuando no existe el id rompe todo
-- POST : email, contrasena, area, perfil ---> todos requeridos
+- GET : id -----> required
+- PUT : id -----> required
+- DELETE : id --> required
+- POST : email, contrasena, area, perfil ---> all required
 
 3. /api/v1/areas
-- GET -> obtener todos las areas
+- GET -> get all areas.
 
 4. /api/v1/area
-- GET : id ----> required   --->  hay un bug, cuando no existe el id rompe todo
-- PUT : id ----> required   --->  hay un bug, cuando no existe el id rompe todo, funciona como post tambien OJO
-- DELETE: id --> required   --->  hay un bug, cuando no existe el id rompe todo
-- POST : area --> requerid ---> nombre del campo requerido es: area
+- GET : id ----> required. Get user by id.
+- PUT : id ----> required. Update user by id.
+- DELETE: id --> required. Remove user by id.
+- POST : area -> required. Create new user.
+
+5. /api/v1/profiles
+- GET --> Get all profiles.
+
+6. /api/v1/reservations
+- GET --> Get all reservations.
+
+7. /api/v1/reservation
+- GET : id -----> required. Get reservation by id.
+- POST ---------> Create new reservation.
+- PUT : id -----> required. Update reservation by id.
+- DELETE : id --> required. Remove reservation by id.
 ```
 
 ## Datos Adicionales
