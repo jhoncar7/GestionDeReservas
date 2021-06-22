@@ -98,23 +98,6 @@ async function updateUser(user, id) {
     }
 }
 
-async function addUserToReservation(userId, id) {
-    const mongoClient = await connection.getConnection();
-    const reservation = await getDataMethod.getReservation(id);
-    if (!reservation) {
-        return null;
-    }
-    let newUsersId = reservation.usersId
-    newUsersId.push(userId);
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('reservas')
-        .updateOne(
-            { _id: id },
-            { $set: { "usersId": newUsersId } });
-
-    return result;
-}
-
 async function updateUserReserva(array,id) {
     console.log('arrayyyy', array);
     console.log('id: ', id);
@@ -131,5 +114,6 @@ async function updateUserReserva(array,id) {
     
     return result;
 }
+
 
 module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, addUserToReservation, updateUserReserva }

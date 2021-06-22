@@ -27,13 +27,31 @@ async function addReservation(date) {
     return result;
 }
 
-async function validarFechaYReserva(user, date) {
+async function addUserToReservation(userId, id) {
+    const mongoClient = await connection.getConnection();
+    const reservation = await getReservation(id);
+    if (!reservation) {
+        return null;
+    }
+    let newUsersId = reservation.usersId
+    newUsersId.push(userId);
+    const result = await mongoClient.db('ReservasPuesto')
+        .collection('reservas')
+        .updateOne(
+            { _id: id },
+            { $set: { "usersId": newUsersId } });
 
+    return result;
+}
+
+async function validarFechaYReserva(user, date) {
+    // TODO: unix timestamp
     let mesActual = new Date().getMonth();
     let anioActual = new Date().getFullYear();
     let diaMesActual = new Date().getDate();
-    let valido = true;
+    let valido = false;
     let fechaReserva = new Date(date);
+    console.log(fechaReserva);
 
     let diaSemana = fechaReserva.getDay(); // domingo a sabado(0-6)
     let diaMes = fechaReserva.getDate(); // 0 al 30
@@ -67,4 +85,4 @@ async function validarFechaYReserva(user, date) {
     return valido;
 }
 
-module.exports = { getReservation, getReservationByDate, addReservation, validarFechaYReserva }
+module.exports = { getReservation, getReservationByDate, addReservation, addUserToReservation, validarFechaYReserva }
