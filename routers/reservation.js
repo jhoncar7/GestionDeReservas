@@ -92,6 +92,7 @@ function validateDate(date) {
         return [true, "Ingrese una fecha en formato unix"]
     }
     let dateNow = Date.now() / 1000 | 0;
+    console.log(date - dateNow);
     if (date - dateNow >= 604800 || date - dateNow < 0) {
         return [true, "La fecha a reservar debe ser desde el día de hoy hasta próximos los 6 días"]
     }
