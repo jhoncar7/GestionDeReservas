@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const user = require('../controllers/user')
 const reservation = require('../controllers/reservation');
+const getWeather = require('../integration/weather');
 
 router.get('/api/v1/reservation', async (req, res) => {
     const users = await user.getUsers();
@@ -32,6 +33,11 @@ router.post('/api/v1/reservation', async (req, res) => {
             return res.status(400)
                 .json({ "error": "Usuario no encontrado" });
         }
+        let error = validateDate(date);
+        if (error[0]) {
+            return res.status(400).json({ "error": error[1] });
+        }
+        console.log(error);
         let reserva = await reservation.getReservationByDate(date)
         console.log("reserva", reserva)
         console.log("#########")
@@ -39,14 +45,16 @@ router.post('/api/v1/reservation', async (req, res) => {
         if (!reserva) {
             reserva = await reservation.addReservation(date)
             reservaId = reserva.ops[0]._id;
-            console.log("new reservaId",reservaId);
+            console.log("new reservaId", reservaId);
         } else {
             reservaId = reserva._id;
-            console.log("old reservaId",reservaId);
+            console.log("old reservaId", reservaId);
         }
         reservation.addUserToReservation(userId, reservaId);
 
-        return res.status(201).json({ "success": true, "usuario": searchUser });
+        let weather = await getWeather(date);
+
+        return res.status(201).json({ "success": true, "usuario": searchUser, "clima": weather });
     }
 });
 
@@ -78,5 +86,16 @@ router.delete('/api/v1/reservation/:id', async (req, res) => {
     return res.json({ "success": true, "deletedUser": searchUser });
 });
 
+function validateDate(date) {
+    let reg = new RegExp('^[0-9]+$');
+    if (!reg.test(date) || date.length > 20) {
+        return [true, "Ingrese una fecha en formato unix"]
+    }
+    let dateNow = Date.now() / 1000 | 0;
+    if (date - dateNow >= 604800 || date - dateNow < 0) {
+        return [true, "La fecha a reservar debe ser desde el día de hoy hasta próximos los 6 días"]
+    }
+    return [false, ""];
+}
 
 module.exports = router;
