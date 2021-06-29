@@ -2,31 +2,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Inicio de Sesion</title>
-
-    <!--JQUERY-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <title>API Doc</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <!-- Los iconos tipo Solid de Fontawesome-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-
-    <!-- Nuestro css-->
-    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" th:href="@{/css/styles.css}">
-
 </head>
 
 <body>
-    <div class="modal-dialog text-center">
+    <!-- <div class="modal-dialog text-center">
         <h1 style="color: aliceblue;">API REST RESERVA TU LUGAR</h1>
         <h2 style="color:black">DOCUMENTACION:</h2>
         <h3 style="color: aliceblue;">
             <a href="https://github.com/jhoncar7/GestionDeReservas" style="color: aliceblue;">https://github.com/jhoncar7/GestionDeReservas</a>
         </h3>
+    </div> -->
+    <div class="container">
+        <div class="col"></div>
+        <div class="col-8 pt-3">
+            <h1>API REST RESERVA TU LUGAR</h1>
+            <h5><a href="https://github.com/jhoncar7/GestionDeReservas">Repo de github</a></h5>
+            <hr>
+            <h3>Rutas</h4>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>Users</h5>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/users</p>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/user/:id</p>
+                            <p><span class="badge badge-pill badge-success">POST</span> /api/v1/user</p>
+                            <p><span class="badge badge-pill badge-success">POST</span> /api/v1/login</p>
+                            <p><span class="badge badge-pill badge-warning">PUT</span> /api/v1/user/:id</p>
+                            <p><span class="badge badge-pill badge-danger">DELETE</span> /api/v1/user/:id</p>
+                        </div>
+                        <span class="badge badge-primary badge-pill">6</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>Profiles</h5>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/profiles</p>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/profile/:id</p>
+                            <p><span class="badge badge-pill badge-success">POST</span> /api/v1/profile</p>
+                            <p><span class="badge badge-pill badge-danger">DELETE</span> /api/v1/profile/:id</p>
+                        </div>
+                        <span class="badge badge-primary badge-pill">4</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>Users</h5>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/users</p>
+                            <p><span class="badge badge-pill badge-primary">GET</span> /api/v1/user/:id</p>
+                            <p><span class="badge badge-pill badge-success">POST</span> /api/v1/user</p>
+                            <p><span class="badge badge-pill badge-success">POST</span> /api/v1/login</p>
+                            <p><span class="badge badge-pill badge-warning">PUT</span> /api/v1/user/:id</p>
+                            <p><span class="badge badge-pill badge-danger">DELETE</span> /api/v1/user/:id</p>
+                        </div>
+                    </li>
+                </ul>
+        </div>
+        <div class="col"></div>
     </div>
 </body>
 

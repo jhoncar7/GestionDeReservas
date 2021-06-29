@@ -4,7 +4,6 @@ const user = require('../controllers/user');
 const auth = require('../middleware/auth')
 
 router.post('/api/v1/login', async (req, res) => {
-
     let {email, password} = req.body;
     console.log('email y password : ' , email, password);
     if (!email || !password) {
@@ -19,7 +18,7 @@ router.post('/api/v1/login', async (req, res) => {
         }
     }
 })
-//verificado ✔
+
 router.get('/api/v1/users', async (req, res) => {
     const users = await user.getUsers();
     if (users.length == 0) {
@@ -28,7 +27,6 @@ router.get('/api/v1/users', async (req, res) => {
     return res.json({ "count": users.length, users });
 })
 
-//verificado ✔
 router.get('/api/v1/user/:id', async (req, res) => {
     let { id } = req.params;
     let searchUser = await user.getUser(id);
@@ -38,7 +36,6 @@ router.get('/api/v1/user/:id', async (req, res) => {
     return res.json(searchUser);
 })
 
-//verificado ✔
 router.post('/api/v1/user', auth, async (req, res) => {
     //el perfil estaria bueno machearlo con la collection de perfil y validar que haya ingresado un valor valido
     let { email, password, profile, area } = req.body;
@@ -52,14 +49,12 @@ router.post('/api/v1/user', auth, async (req, res) => {
     }
 });
 
-//verificado ✔
 router.put('/api/v1/user/:id', auth, async (req, res) => {
     let { id } = req.params;
     if (!id) {
         return res.status(400).json({ "error": "el parametro _id es requerido" });
     }
     let updatedUser = await user.updateUser(req.body, id);
-    console.log('updatedUser:', updatedUser);
     if (!updatedUser) {
         return res.status(404).json({ "error": "el usuario no existe" });
     } else if (updatedUser.result.ok == 1) {
@@ -69,7 +64,6 @@ router.put('/api/v1/user/:id', auth, async (req, res) => {
     }
 })
 
-//verificado ✔
 router.delete('/api/v1/user/:id', auth, async (req, res) => {
 
     let { id } = req.params;
