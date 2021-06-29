@@ -1,14 +1,16 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 
+async function getReservations() {
+    const mongoClient = await connection.getConnection();
+    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').find().toArray();
+    return reservas;
+}
+
 async function getReservation(id) {
     const mongoClient = await connection.getConnection();
-    let reserva = undefined;
-    try {
-        reserva = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ _id: new ObjectId(id) });
-    } catch (error) {
-        console.log('area not found');
-    }
+    let reserva = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ _id: id });
+
     return reserva;
 }
 
@@ -18,8 +20,15 @@ async function getReservationByDate(date) {
     return reservas;
 }
 
+async function getReservationByUNIX(date) {
+    const mongoClient = await connection.getConnection();
+    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ unix: date });
+    return reservas;
+}
+
 async function addReservation(date) {
-    let reserva = { date: date, usersId: [] }
+    let datetime = new Date(date * 1000).toLocaleDateString("es-AR");
+    let reserva = { date: datetime, unix: date, usersId: [] }
     const mongoClient = await connection.getConnection();
     const result = await mongoClient.db('ReservasPuesto')
         .collection('reservas')
@@ -33,15 +42,19 @@ async function addUserToReservation(userId, id) {
     if (!reservation) {
         return null;
     }
-    let newUsersId = reservation.usersId
-    newUsersId.push(userId);
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('reservas')
-        .updateOne(
-            { _id: id },
-            { $set: { "usersId": newUsersId } });
+    if (reservation.usersId.find(e => e == userId) == undefined) {
+        let newUsersId = reservation.usersId
+        newUsersId.push(userId);
+        const result = await mongoClient.db('ReservasPuesto')
+            .collection('reservas')
+            .updateOne(
+                { _id: id },
+                { $set: { "usersId": newUsersId } });
 
-    return result;
+        return result;
+    } else {
+        return null;
+    }
 }
 
 async function validarFechaYReserva(user, date) {
@@ -51,7 +64,6 @@ async function validarFechaYReserva(user, date) {
     let diaMesActual = new Date().getDate();
     let valido = false;
     let fechaReserva = new Date(date);
-    console.log(fechaReserva);
 
     let diaSemana = fechaReserva.getDay(); // domingo a sabado(0-6)
     let diaMes = fechaReserva.getDate(); // 0 al 30
@@ -85,4 +97,4 @@ async function validarFechaYReserva(user, date) {
     return valido;
 }
 
-module.exports = { getReservation, getReservationByDate, addReservation, addUserToReservation, validarFechaYReserva }
+module.exports = { getReservations, getReservation, getReservationByDate, getReservationByUNIX, addReservation, addUserToReservation, validarFechaYReserva }
