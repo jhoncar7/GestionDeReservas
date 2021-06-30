@@ -1,7 +1,7 @@
 const chalk = require('chalk');
-const fs = require('fs');
+//const fs = require('fs');
 
-function validateEnvFile() {
+/* function validateEnvFile() {
     if (!fs.existsSync(__dirname + '/' + '.env')) {
         console.log(chalk.red('No se encontro el archivo .env en la ruta del proyecto (necesario para iniciar el servidor)'));
         process.exit(0);
@@ -18,7 +18,7 @@ function validateEnvFile() {
         console.log(chalk.red('No se encontro la propiedad WEATHER_KEY en el archivo .env'));
         process.exit(0);
     }
-}
+} */
 
 function validateDate(date) {
     let reg = new RegExp('^[0-9]+$');
@@ -40,4 +40,4 @@ function unixToDate(unix) {
     return new Date(unix * 1000).toLocaleDateString("es-AR");
 }
 
-module.exports = { validateEnvFile, validateDate, unixToDate }
+module.exports = { validateDate, unixToDate }

@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('./utils').validateEnvFile()
+//require('./utils').validateEnvFile()
 
 const express = require('express');
 const index = require('./routers/index');
