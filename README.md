@@ -28,6 +28,17 @@ pueda reservar un lugar dentro de la oficina el dia en que pueda asistir. Esto s
 - Users
 ```
 
+## Datos Adicionales
+```python
+1. Se podran realizar reservas para la semana en curso.
+2. Solo se podran realizar un maximo de 3 reservas por empleado.
+3. Cada Empleado pertenece a un area.
+4. Cada Area tiene un maximo de puestos a ocupar.
+5. No se podra exceder la cantidad de reservas por area.
+6. No exceder la cantidad de reservas totales (el total se calcula con la suma de puestos de cada area)
+7. Ademas tendra la opcion de poder reservar una cochera si posee un vehiculo -> feature.
+```
+
 ## Installation
 Usar cualquier editor de texto (Visula Study Code) y ejecutar los siguientes comandos:
 
@@ -44,7 +55,7 @@ npm install
 ```bash
 npm start
 ```
-## APIS
+## Endpoints
 ```python
 1. /api/v1/users
 - GET -> get all users
@@ -77,15 +88,5 @@ npm start
 - DELETE : id --> required. Remove reservation by id.
 ```
 
-## Datos Adicionales
-```python
-1. Se podran realizar reservas para la semana en curso.
-2. Solo se podran realizar un maximo de 3 reservas por empleado.
-3. Cada Empleado pertenece a un area.
-4. Cada Area tiene un maximo de puestos a ocupar.
-5. No se podra exceder la cantidad de reservas por area.
-6. No exceder la cantidad de reservas totales (el total se calcula con la suma de puestos de cada area)
-7. Ademas tendra la opcion de poder reservar una cochera si posee un vehiculo -> feature.
-```
 
 
