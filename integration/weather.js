@@ -8,12 +8,13 @@ async function getWeather(date) {
 	var weatherObj;
 	weather.daily.forEach(day => {
 		let getCurrentDay = new Date(day.dt * 1000).getDate();
-		if(getDate == getCurrentDay){
-			weatherObj = { fecha: new Date(date*1000).toLocaleDateString(),
-							minima : day.temp.min, 
-							maxima: day.temp.max, 
-							humedad: day.humidity, 
-							descripcion: day.weather[0].description
+		if (getDate == getCurrentDay) {
+			weatherObj = {
+				fecha: new Date(date * 1000).toLocaleDateString(),
+				minima: day.temp.min,
+				maxima: day.temp.max,
+				humedad: day.humidity,
+				descripcion: day.weather[0].description
 			}
 		}
 	});

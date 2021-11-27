@@ -7,7 +7,7 @@ function auth(req, res, next) {
         jwt.verify(token, process.env.SECRET);
         next();
     } catch (error) {
-        res.status(401).send({error: error.message})
+        res.status(401).send({error: 'Necesitas autorizacion para realizar esta accion'})
     }
 }
 

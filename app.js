@@ -1,6 +1,7 @@
 require('dotenv').config();
+//require('./utils').validateEnvFile()
+
 const express = require('express');
-const bodyParser = require('body-parser');
 const index = require('./routers/index');
 const user = require('./routers/user');
 const area = require('./routers/area');
