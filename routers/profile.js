@@ -4,7 +4,7 @@ const profileController = require('../controllers/profile');
 
 router.get('/api/v1/profiles', async (req, res) => {
     const profiles = await profileController.getProfiles();
-    res.json(profiles);
+    res.status(200).json(profiles);
 })
 
 router.get('/api/v1/profile/:id', async (req, res) => {

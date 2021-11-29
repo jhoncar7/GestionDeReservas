@@ -17,4 +17,8 @@ async function getConnection() {
     return instance;
 };
 
-module.exports = { getConnection };
+function getDBName(){
+    return 'ReservasPuesto';
+}
+
+module.exports = { getConnection, getDBName };

@@ -75,4 +75,16 @@ async function updateArea(area, id) {
     }
 }
 
-module.exports = {getAreas, getArea, deleteArea, addArea, updateArea}
+async function verifyArea(area){
+    let areasList = await getAreas();
+    let result = "";
+    if(!areasList) return false;
+    areasList.find(function(element) {
+        if(element.name == area){
+            result = element.name;
+        } 
+      });
+      return result === "" ? false : true;
+}
+
+module.exports = {getAreas, getArea, deleteArea, addArea, updateArea, verifyArea}

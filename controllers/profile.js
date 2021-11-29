@@ -25,4 +25,16 @@ async function deleteProfile(id) {
     return result;
 }
 
-module.exports = { getProfiles, addProfile, getProfileByProfileId, deleteProfile }
+async function verifyProfile(profile){
+    let profileList = await getProfiles();
+    let result = "";
+    profileList.find(function(element) {
+        if(element.profile === profile){
+            result = element.profile;
+        }
+    });
+  return result == "" ? false : true;
+}
+
+
+module.exports = { getProfiles, addProfile, getProfileByProfileId, deleteProfile, verifyProfile }
