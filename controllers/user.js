@@ -3,9 +3,17 @@ let ObjectId = require('mongodb').ObjectId;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-async function getUserLogin(email, password) {
+
+async function getDBConnection(){
     const mongoClient = await connection.getConnection();
-    const user = await mongoClient.db('ReservasPuesto').collection('users').findOne({ email: email });
+    const DB = connection.getDBName();
+
+    return mongoClient.db(DB).collection('users');
+}
+
+async function getUserLogin(email, password) {
+    const userCollection = await getDBConnection();
+    const user = userCollection.findOne({ email: email });
 
     if (!user) {
         throw new Error('Usuario no existe')
@@ -25,16 +33,16 @@ async function generateJWT(user) {
 }
 
 async function getUsers() {
-    const mongoClient = await connection.getConnection();
-    const users = await mongoClient.db('ReservasPuesto').collection('users').find().toArray();
-    return users;
+    const userCollection = await getDBConnection();
+    const result = userCollection.find().toArray();
+    return result;
 }
 
 async function getUser(id) {
-    const mongoClient = await connection.getConnection();
     let user = undefined;
     try {
-        user = await mongoClient.db('ReservasPuesto').collection('users').findOne({ _id: new ObjectId(id) });
+        const userCollection = await getDBConnection();
+        user = userCollection.findOne({ _id: new ObjectId(id) });
     } catch (error) {
         console.log('user not found');
     }
@@ -42,21 +50,19 @@ async function getUser(id) {
 }
 
 async function deleteUser(id) {
-    const mongoClient = await connection.getConnection();
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('users')
-        .deleteOne({ _id: new ObjectId(id) });
+    const userCollection = await getDBConnection();
+    const result = userCollection.deleteOne({ _id: new ObjectId(id) });
 
     return result;
 }
 
 async function addUser(user) {
     user.reservas = [];
-    const mongoClient = await connection.getConnection();
+    user.profile = user.profile.toUpperCase();
+    user.area = user.area.toUpperCase();
     user.password = bcrypt.hashSync(user.password, 8);
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('users')
-        .insertOne(user);
+    const userCollection = await getDBConnection();
+    const result = userCollection.insertOne(user);
     return result;
 }
 
@@ -66,7 +72,6 @@ async function updateUser(user, id) {
         return null;
     }
     if (Object.keys(userById).length > 0) {
-        const mongoClient = await connection.getConnection();
         const query = { _id: new ObjectId(id) };
         let key = Object.keys(user);
         let value = Object.values(user);
@@ -81,9 +86,8 @@ async function updateUser(user, id) {
         }
         newValues.$set = object;
         if (Object.keys(object).length > 0) {
-            const result = await mongoClient.db('ReservasPuesto')
-                .collection('users')
-                .updateOne(query, newValues);
+            const userCollection = await getDBConnection();
+            const result = userCollection.updateOne(query, newValues);
 
             return result;
         } else {
@@ -101,7 +105,6 @@ async function updateUser(user, id) {
 async function updateUserReserva(array,id) {
     console.log('arrayyyy', array);
     console.log('id: ', id);
-    const mongoClient = await connection.getConnection();
     const query = { _id: new ObjectId(id) };
     const newValues = {
         $set: {
@@ -109,11 +112,49 @@ async function updateUserReserva(array,id) {
         }
     }
 
-    const result = await mongoClient.db('ReservasPuesto').collection('users')
-                    .updateOne(query,newValues);
+    const userCollection = await getDBConnection();
+    const result = userCollection.updateOne(query,newValues);
     
     return result;
 }
 
+async function verifyUsersArea(name){
+    const userCollection = await getUsers(); 
+    let result=[];
+    await userCollection.find(function(element) {
+        if(element.area == name){
+            result.push(element);
+        } 
+      });
+    return result;
+}
 
-module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, updateUserReserva }
+async function verifyUsersProfile(name){
+    const userCollection = await getUsers();
+    let result =[];
+    await userCollection.find(function(element) {
+        if(element.profile == name){
+             result.push(element);
+            } 
+        });
+    return result;
+}
+
+async function updateAreaUsers(users, newAreaName){
+    for (let index = 0; index < users.length; index++) {
+        const element = users[index];
+        element.area = newAreaName;
+        await updateUser(element, element._id);
+    }
+}
+
+async function updateProfileUsers(users, newProfile){
+    for (let index = 0; index < users.length; index++) {
+        const element = users[index];
+        element.profile = newProfile;
+        await updateUser(element, element._id);
+    }
+}
+
+module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, 
+    updateUserReserva, verifyUsersArea, verifyUsersProfile, updateAreaUsers, updateProfileUsers }
