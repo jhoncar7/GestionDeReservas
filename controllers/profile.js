@@ -27,9 +27,46 @@ async function getProfileByProfileId(id) {
     return profile;
 }
 
+async function updateProfile(profile, id) {
+
+    const profileById = await getProfileByProfileId(id);
+
+    if (!profileById) {
+        return null;
+    }
+    if (Object.keys(profileById).length > 0) {
+        const collection = await getDBConnection();
+        const query = { _id: new ObjectId(id) };
+        let key = Object.keys(profile);
+        let value = Object.values(profile);
+        let object = {};
+
+        const newValues = { $set: {} };
+
+        for (let j = 0; j < key.length; j++) {
+            if (key[j] != '_id') {
+                object[key[j]] = value[j];
+            }
+        }
+        newValues.$set = object;
+        if (Object.keys(object).length > 0) {
+            const result = collection.updateOne(query, newValues);
+
+            return result;
+        } else {
+            console.log('set esta totalmente vacio');
+            return null;
+        }
+
+    } else {
+        console.log('no existe el id enviado');
+        return null;
+    }
+}
+
 async function deleteProfile(id) {
     const collection = await getDBConnection();
-    const result = await collection.deleteOne({ _id: id });
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
     return result;
 }
 
@@ -45,4 +82,4 @@ async function verifyProfile(profile){
 }
 
 
-module.exports = { getProfiles, addProfile, getProfileByProfileId, deleteProfile, verifyProfile }
+module.exports = { getProfiles, addProfile, getProfileByProfileId, deleteProfile, verifyProfile, updateProfile }

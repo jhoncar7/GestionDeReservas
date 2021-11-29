@@ -121,7 +121,7 @@ async function updateUserReserva(array,id) {
 async function verifyUsersArea(name){
     const userCollection = await getUsers(); 
     let result=[];
-    userCollection.find(function(element) {
+    await userCollection.find(function(element) {
         if(element.area == name){
             result.push(element);
         } 
@@ -132,28 +132,28 @@ async function verifyUsersArea(name){
 async function verifyUsersProfile(name){
     const userCollection = await getUsers();
     let result =[];
-    userCollection.find(function(element) {
+    await userCollection.find(function(element) {
         if(element.profile == name){
-            console.log(element)
-            result.push(element);
-        } 
-      });
+             result.push(element);
+            } 
+        });
     return result;
 }
 
 async function updateAreaUsers(users, newAreaName){
-    users.forEach(element => {
-        console.log(element)
+    for (let index = 0; index < users.length; index++) {
+        const element = users[index];
         element.area = newAreaName;
-        updateUser(element, element._id);
-    });
+        await updateUser(element, element._id);
+    }
 }
 
 async function updateProfileUsers(users, newProfile){
-    users.forEach(element => {
+    for (let index = 0; index < users.length; index++) {
+        const element = users[index];
         element.profile = newProfile;
-        updateUser(element, element._id);
-    });
+        await updateUser(element, element._id);
+    }
 }
 
 module.exports = {generateJWT, getUserLogin, getUsers, getUser, deleteUser, addUser, updateUser, 

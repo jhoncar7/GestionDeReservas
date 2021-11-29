@@ -49,8 +49,8 @@ router.put('/api/v1/area/:id', async (req, res) => {
         req.body.name= req.body.name.toUpperCase()
         let isCreated = await area.verifyArea(req.body.name);
         if(isCreated) return res.status(400).json({"mensaje": "El nombre del área ya existe"})
-        let usersWithArea = await verifyUsersArea(req.body.name);
-        console.log(usersWithArea);
+        let oldName = await area.getArea(req.params.id);
+        let usersWithArea = await verifyUsersArea(oldName.name);
         await updateAreaUsers(usersWithArea, req.body.name);
     }
    

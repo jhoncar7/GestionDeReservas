@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const profileController = require('../controllers/profile');
-const { verifyUsersProfile } = require('../controllers/user');
+const { verifyUsersProfile, updateProfileUsers } = require('../controllers/user');
 
 router.get('/api/v1/profiles', async (req, res) => {
     const profiles = await profileController.getProfiles();
@@ -25,6 +25,30 @@ router.post('/api/v1/profile', async (req, res) => {
     let obj = { profile, profile_id };
     let newProfile = await profileController.addProfile(obj);
     return res.status(201).json({"profile": newProfile.ops[0] });
+})
+
+//verificado ✔
+router.put('/api/v1/profile/:id', async (req, res) => {
+
+    if (!req.params.id) {
+        return res.status(400).json({ "error": "el parametro id es requerido" });
+    }
+    if(req.body.profile != undefined){
+        req.body.profile= req.body.profile.toUpperCase()
+        let isCreated = await profileController.verifyProfile(req.body.profile);
+        if(isCreated) return res.status(400).json({"mensaje": "El nombre del perfil ya existe"})
+        let oldName = await profileController.getProfileByProfileId(req.params.id);
+        let usersWithProfile = await verifyUsersProfile(oldName.profile);
+        await updateProfileUsers(usersWithProfile, req.body.profile);
+    }
+   
+    let updatedProfile = await profileController.updateProfile(req.body, req.params.id);
+
+    if (!updatedProfile) {
+        return res.status(404).json({ "error": "Error al querer modificar el perfil." });
+    } else if (updatedProfile.result.ok == 1) {
+        return res.status(200).json({ "mensaje": "actualización exitosa" })
+    }
 })
 
 router.delete('/api/v1/profile/:id', async (req, res) => {

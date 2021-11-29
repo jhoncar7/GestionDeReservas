@@ -37,7 +37,7 @@ router.get('/api/v1/user/:id', async (req, res) => {
     return res.json(searchUser);
 })
 
-router.post('/api/v1/user', auth, async (req, res) => {
+router.post('/api/v1/user', /*auth,*/ async (req, res) => {
     let { email, password, profile, area } = req.body;
 
     if (!validateFields(email, password, profile, area))
@@ -55,7 +55,7 @@ router.post('/api/v1/user', auth, async (req, res) => {
     
 });
 //verificado ✔
-router.put('/api/v1/user/:id', auth,  async (req, res) => {
+router.put('/api/v1/user/:id', /*auth,*/  async (req, res) => {
     if (!req.params.id) {
         return res.status(400).json({ "error": "el parametro 'id' es requerido en el path" });
     }
@@ -82,7 +82,7 @@ router.put('/api/v1/user/:id', auth,  async (req, res) => {
     return res.json({ "mensaje": "actualización exitosa" })
 })
 
-router.delete('/api/v1/user/:id', auth,  async (req, res) => {
+router.delete('/api/v1/user/:id', /*auth,*/  async (req, res) => {
 
     if (!req.params.id) return res.status(400).json({ "error": "el parametro _id es requerido" });
 
