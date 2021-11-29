@@ -1,17 +1,25 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 
-async function getAreas() {
+async function getDBConnection(){
     const mongoClient = await connection.getConnection();
-    const areas = await mongoClient.db('ReservasPuesto').collection('areas').find().toArray();
+    const DB = connection.getDBName();
+
+    return mongoClient.db(DB).collection('areas');
+}
+
+
+async function getAreas() {
+    const collection = await getDBConnection();
+    const areas = collection.find().toArray();
     return areas;
 }
 
 async function getArea(id) {
-    const mongoClient = await connection.getConnection();
+    const collection = await getDBConnection();
     let area = undefined;
     try {
-        area = await mongoClient.db('ReservasPuesto').collection('areas').findOne({ _id: new ObjectId(id) });
+        area = collection.findOne({ _id: new ObjectId(id) });
     } catch (error) {
         console.log('area not found');
     }
@@ -19,19 +27,16 @@ async function getArea(id) {
 }
 
 async function deleteArea(id){
-    const mongoClient = await connection.getConnection();
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('areas')
-        .deleteOne({_id: new ObjectId(id)});
+    const collection = await getDBConnection();
+    const result = collection.deleteOne({_id: new ObjectId(id)});
     
     return result;
 }
 
 async function addArea(area) {
-    const mongoClient = await connection.getConnection();
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('areas')
-        .insertOne(area);
+    area.name = area.name.toUpperCase()
+    const collection = await getDBConnection();
+    const result = collection.insertOne(area);
     return result;
 }
 
@@ -43,7 +48,7 @@ async function updateArea(area, id) {
         return null;
     }
     if (Object.keys(areaById).length > 0) {
-        const mongoClient = await connection.getConnection();
+        const collection = await getDBConnection();
         const query = { _id: new ObjectId(id) };
         let key = Object.keys(area);
         let value = Object.values(area);
@@ -58,9 +63,7 @@ async function updateArea(area, id) {
         }
         newValues.$set = object;
         if (Object.keys(object).length > 0) {
-            const result = await mongoClient.db('ReservasPuesto')
-                .collection('areas')
-                .updateOne(query, newValues);
+            const result = collection.updateOne(query, newValues);
 
             return result;
         } else {

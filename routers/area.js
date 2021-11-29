@@ -32,7 +32,7 @@ router.post('/api/v1/area', async (req, res) => {
         return res.status(400)
             .json({ "error": "Campos que requieren ser enviados por body: 1.'name'(String) 2.'seat_availability'(valor entero)" });
     } else {
-        let isCreated = await area.verifyArea(name);
+        let isCreated = await area.verifyArea(name.toUpperCase());
         if(isCreated) return res.status(400).json({"mensaje": "El nombre del área ya existe"})
         let newArea = await area.addArea(req.body);
         return res.status(201).json({ "area": newArea.ops[0] }); //ver
@@ -46,6 +46,7 @@ router.put('/api/v1/area/:id', async (req, res) => {
         return res.status(400).json({ "error": "el parametro id es requerido" });
     }
     if(req.body.name != undefined){
+        req.body.name= req.body.name.toUpperCase()
         let isCreated = await area.verifyArea(req.body.name);
         if(isCreated) return res.status(400).json({"mensaje": "El nombre del área ya existe"})
         let usersWithArea = await verifyUsersArea(req.body.name);
@@ -70,6 +71,11 @@ router.delete('/api/v1/area/:id', async (req, res) => {
     }
     let deleteArea = await area.getArea(req.params.id);
     if (!deleteArea) return res.status(404).json({ "error": "Área no encontrada" });
+
+    let isUserUsingArea = await verifyUsersArea(deleteArea.name);
+    if(isUserUsingArea.length > 0){
+        return res.status(404).json({ "error": "No pudo eliminarse el área. Hay usuarios con esta área asociada. Modifique el área de los usuarios antes de eliminarla." });
+    }
     
     await area.deleteArea(req.params.id);
     return res.json({ "mensaje": "El área fue eliminada exitosamente" });

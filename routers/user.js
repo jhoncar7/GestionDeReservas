@@ -45,8 +45,8 @@ router.post('/api/v1/user', auth, async (req, res) => {
     
     //if(!validateEmail(email)) return res.status(400).json({ "error": "El campo email debe seguir el patron de emails. Ej: admin@admin.com"});
 
-    const isAreaValid = await verifyArea(area);
-    const isProfileValid = await verifyProfile(profile);
+    const isAreaValid = await verifyArea(area.toUpperCase());
+    const isProfileValid = await verifyProfile(profile.toUpperCase());
     if(!isAreaValid) return res.status(400).json({"error": "El área enviada no existe o no es correcta"})
     if(!isProfileValid) return res.status(400).json({"error": "El perfil enviado no es correcto"})
 
@@ -55,7 +55,7 @@ router.post('/api/v1/user', auth, async (req, res) => {
     
 });
 //verificado ✔
-router.put('/api/v1/user/:id', auth, async (req, res) => {
+router.put('/api/v1/user/:id', auth,  async (req, res) => {
     if (!req.params.id) {
         return res.status(400).json({ "error": "el parametro 'id' es requerido en el path" });
     }
@@ -64,10 +64,12 @@ router.put('/api/v1/user/:id', auth, async (req, res) => {
     if (!getUser) return res.status(404).json({ "mensaje": "Usuario no encontrado" });
 
     if(req.body.area != undefined){
+        req.body.area = req.body.area.toUpperCase()
         const isAreaValid = await verifyArea(req.body.area);
         if(!isAreaValid) return res.status(400).json({"error": "El área enviada no existe o no es correcta"})
     }
     if(req.body.profile != undefined){
+        req.body.profile = req.body.profile.toUpperCase()
         const isProfileValid = await verifyProfile(req.body.profile);
         if(!isProfileValid) return res.status(400).json({"error": "El perfil enviado no es correcto"})
     }
@@ -80,7 +82,7 @@ router.put('/api/v1/user/:id', auth, async (req, res) => {
     return res.json({ "mensaje": "actualización exitosa" })
 })
 
-router.delete('/api/v1/user/:id', auth, async (req, res) => {
+router.delete('/api/v1/user/:id', auth,  async (req, res) => {
 
     if (!req.params.id) return res.status(400).json({ "error": "el parametro _id es requerido" });
 

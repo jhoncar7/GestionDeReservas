@@ -1,43 +1,48 @@
 const connection = require('./connection');
 let ObjectId = require('mongodb').ObjectId;
 
-async function getReservations() {
+async function getDBConnection(){
     const mongoClient = await connection.getConnection();
-    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').find().toArray();
+    const DB = connection.getDBName();
+
+    return mongoClient.db(DB).collection('reservas');
+}
+
+async function getReservations() {
+    const collection = await getDBConnection();
+    const reservas = collection.find().toArray();
     return reservas;
 }
 
 async function getReservation(id) {
-    const mongoClient = await connection.getConnection();
-    let reserva = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ _id: id });
+    const collection = await getDBConnection();
+    let reserva = collection.findOne({ _id: id });
 
     return reserva;
 }
 
 async function getReservationByDate(date) {
-    const mongoClient = await connection.getConnection();
-    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ date: date });
+    const collection = await getDBConnection();
+    const reservas = collection.findOne({ date: date });
     return reservas;
 }
 
 async function getReservationByUNIX(date) {
-    const mongoClient = await connection.getConnection();
-    const reservas = await mongoClient.db('ReservasPuesto').collection('reservas').findOne({ unix: date });
+    const collection = await getDBConnection();
+    const reservas = collection.findOne({ unix: date });
     return reservas;
 }
 
 async function addReservation(date) {
     let datetime = new Date(date * 1000).toLocaleDateString("es-AR");
     let reserva = { date: datetime, unix: date, usersId: [] }
-    const mongoClient = await connection.getConnection();
-    const result = await mongoClient.db('ReservasPuesto')
-        .collection('reservas')
-        .insertOne(reserva);
+    const collection = await getDBConnection();
+    const result = collection.insertOne(reserva);
     return result;
 }
 
 async function addUserToReservation(userId, id) {
-    const mongoClient = await connection.getConnection();
+    const collection = await getDBConnection();
     const reservation = await getReservation(id);
     if (!reservation) {
         return null;
@@ -45,11 +50,7 @@ async function addUserToReservation(userId, id) {
     if (reservation.usersId.find(e => e == userId) == undefined) {
         let newUsersId = reservation.usersId
         newUsersId.push(userId);
-        const result = await mongoClient.db('ReservasPuesto')
-            .collection('reservas')
-            .updateOne(
-                { _id: id },
-                { $set: { "usersId": newUsersId } });
+        const result = collection.updateOne({ _id: id },{ $set: { "usersId": newUsersId } });
 
         return result;
     } else {

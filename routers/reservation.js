@@ -35,6 +35,12 @@ router.get('/api/v1/reservation/:date', async (req, res) => {
 
 })
 
+router.get('/api/v1/reservation/:id', async (req, res) => {
+    let searchUser = await findUser(req.params.id);
+    
+    return res.status(200).json(searchUser);
+})
+
 router.post('/api/v1/reservation', async (req, res) => {
     let { date, userId } = req.body;
     if (!date || !userId) return res.status(400).json({ "error": "Campos requeridos en el body para realizar una reserva: 'date' 'userId'" });
@@ -85,19 +91,6 @@ router.delete('/api/v1/reservation/:id', async (req, res) => {
     await deleteDataMethod.deleteUser(id);
     return res.json({ "deletedUser": searchUser });
 });
-
-function validateDate(date) {
-    let reg = new RegExp('^[0-9]+$');
-    if (!reg.test(date) || date.length > 20) {
-        return [true, "Ingrese una fecha en formato unix"]
-    }
-    let dateNow = Date.now() / 1000 | 0;
-    console.log(date - dateNow);
-    if (date - dateNow >= 604800 || date - dateNow < 0) {
-        return [true, "La fecha a reservar debe ser desde el día de hoy hasta próximos los 6 días"]
-    }
-    return [false, ""];
-}
 
 async function findUser(id){
     let searchUser = await user.getUser(id);

@@ -58,6 +58,8 @@ async function deleteUser(id) {
 
 async function addUser(user) {
     user.reservas = [];
+    user.profile = user.profile.toUpperCase();
+    user.area = user.area.toUpperCase();
     user.password = bcrypt.hashSync(user.password, 8);
     const userCollection = await getDBConnection();
     const result = userCollection.insertOne(user);
@@ -121,7 +123,7 @@ async function verifyUsersArea(name){
     let result=[];
     userCollection.find(function(element) {
         if(element.area == name){
-            result[element];
+            result.push(element);
         } 
       });
     return result;
@@ -133,7 +135,7 @@ async function verifyUsersProfile(name){
     userCollection.find(function(element) {
         if(element.profile == name){
             console.log(element)
-            result.add(element);
+            result.push(element);
         } 
       });
     return result;
